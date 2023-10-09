@@ -15,11 +15,11 @@ KONSEP DAN CERITA APLIKASI:
 
 DAFTAR MODUL:
 
-1.
-Penjelasan:
+1. Modul Membaca Buku (Read Book)
+Penjelasan: (sistemnya search bukunya dulu mau apa trus baru deh langsung bisa baca)
 
-2.
-Penjelasan:
+2. Modul Favorit Buku (My Favorites)
+Penjelasan: (Ada list buku2 yang kita bisa favoritin dari search terus bisa langsung baca buku juga kyk modul 1)
 
 3. 
 Penjelasan:
