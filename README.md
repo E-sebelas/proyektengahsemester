@@ -1,38 +1,48 @@
-# proyektengahsemester
-Proyek Tengah Semester PBP Kelompok E11
+## **Proyek Tengah Semester PBP Kelompok E11** 📚
+---
 
-ANGGOTA KELOMPOK:
-1. Andhika Finnanda Rayhan (2206826551)
-2. Maulana Afzaal Wibowo (2206826873)
-3. Hishah Khalishah (2206083703)
-4. Rafli Aditya Shaista (2206083306)
-5. Gyanamurti Adhikara Bano (2206082266)
+### **Anggota Kelompok:** 👥
+1. **Andhika Finnanda Rayhan** - 2206826551
+2. **Maulana Afzaal Wibowo** - 2206826873
+3. **Hishah Khalishah** - 2206083703
+4. **Rafli Aditya Shaista** - 2206083306
+5. **Gyanamurti Adhikara Bano** - 2206082266
 
-KONSEP DAN CERITA APLIKASI:
+---
 
+### **Konsep dan Cerita Aplikasi:** 🎨
+**Ceritanya:** (diisi sesuai dengan konsep dan cerita aplikasi yang ingin disampaikan)
 
+---
 
+### **Daftar Modul:** 📋
 
-DAFTAR MODUL:
+1. **Modul Membaca Buku (Read Book)** 🔍
+   - **Penjelasan:** Berfungsi sebagai mesin pencarian buku. Ketika judul buku di-hover, akan muncul 2 opsi: "Read" yang memungkinkan user untuk membaca buku dan tombol favorit (logo hati) yang memungkinkan user untuk menambahkan buku ke dalam daftar favorit mereka.
 
-1. Modul Membaca Buku (Read Book)
-Penjelasan: Akan bekerja seperti sebuah search engine yang akan mencari sebuah judul buku yang relevan dengan input user, judul buku yang di hover akan muncul 2 button yang pertama "Read" untuk membaca buku tersebut lalu tombol favorite atau logo heart yang akan memasukkan buku tersebut ke favorites user untuk modul 2.
+2. **Modul Favorit Buku (My Favorites)** ❤️
+   - **Penjelasan:** Menampilkan daftar buku yang telah difavoritkan. User dapat membaca buku langsung dari daftar ini atau menghapusnya dari daftar favorit.
 
-2. Modul Favorit Buku (My Favorites)
-Penjelasan: (Ada list buku2 yang kita bisa favoritin dari search terus bisa langsung baca buku juga kyk modul 1) Berisi list buku yang telah kita "Favorite", ada button untuk read juga seperti pada modul 1 dan button untuk delete buku tersebut dari favorites user
+3. **Modul Report** 📝
+   - **Penjelasan:** Memberikan laporan atau pengaduan terkait buku atau isu lainnya, seperti buku yang rusak.
 
-3. Modul Report
-Penjelasan: Modul laporan/pengaduan yang mengimplementasikan model tersendiri atau bisa menyangkut buku (misalkan modul laporan buku rusak)
+4. **Modul Request Buku** 📖
+   - **Penjelasan:** User dapat meminta buku tertentu melalui modul ini.
 
-4. Modul request buku
-Penjelasan: Mengimplementasikan model tersendiri (namun ada kolom judul buku yang masih nyambung sama temanya)
+5. **Isi en dewee** ❓
+   - **Penjelasan:** (diisi sesuai dengan penjelasan modul)
 
-5. Isi en dewee
-Penjelasan:
+---
 
+### **Sumber Dataset:** 🗃️
+**(omongin bareng bareng yu)**
 
-SUMBER DATASET:
-...
+---
 
+### **Role:** 🎭
+**Admin:** Dapat menghapus atau menambah buku, serta melihat daftar peminjam dan buku yang sedang dipinjam.
+**User:** Meminjam, mengembalikan, dan melihat ringkasan buku.
 
-role? #Duelist kl ga jungler bang
+---
+
+*Semua informasi di atas disajikan dengan sebaik mungkin. Silakan hubungi anggota kelompok untuk informasi lebih lanjut atau klarifikasi.* 📞💌
