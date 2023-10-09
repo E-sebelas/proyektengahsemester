@@ -21,13 +21,13 @@ Penjelasan: Akan bekerja seperti sebuah search engine yang akan mencari sebuah j
 2. Modul Favorit Buku (My Favorites)
 Penjelasan: (Ada list buku2 yang kita bisa favoritin dari search terus bisa langsung baca buku juga kyk modul 1) Berisi list buku yang telah kita "Favorite", ada button untuk read juga seperti pada modul 1 dan button untuk delete buku tersebut dari favorites user
 
-3. 
-Penjelasan:
+3. Modul Report
+Penjelasan: Modul laporan/pengaduan yang mengimplementasikan model tersendiri atau bisa menyangkut buku (misalkan modul laporan buku rusak)
 
-4.
-Penjelasan:
+4. Modul request buku
+Penjelasan: Mengimplementasikan model tersendiri (namun ada kolom judul buku yang masih nyambung sama temanya)
 
-5.
+5. Isi en dewee
 Penjelasan:
 
 
@@ -35,4 +35,4 @@ SUMBER DATASET:
 ...
 
 
-role?
+role? #Duelist kl ga jungler bang
