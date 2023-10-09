@@ -19,7 +19,7 @@ DAFTAR MODUL:
 Penjelasan: Akan bekerja seperti sebuah search engine yang akan mencari sebuah judul buku yang relevan dengan input user, judul buku yang di hover akan muncul 2 button yang pertama "Read" untuk membaca buku tersebut lalu tombol favorite atau logo heart yang akan memasukkan buku tersebut ke favorites user untuk modul 2.
 
 2. Modul Favorit Buku (My Favorites)
-Penjelasan: (Ada list buku2 yang kita bisa favoritin dari search terus bisa langsung baca buku juga kyk modul 1) Berisi list buku yang telah kita "Favorite" 
+Penjelasan: (Ada list buku2 yang kita bisa favoritin dari search terus bisa langsung baca buku juga kyk modul 1) Berisi list buku yang telah kita "Favorite", ada button untuk read juga seperti pada modul 1 dan button untuk delete buku tersebut dari favorites user
 
 3. 
 Penjelasan:
