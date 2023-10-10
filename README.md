@@ -11,7 +11,7 @@
 ---
 
 ### **Konsep dan Cerita Aplikasi:** 🎨
-**Ceritanya:** (diisi sesuai dengan konsep dan cerita aplikasi yang ingin disampaikan)
+Website bertema literasi oleh Kelompok E-sebelas yang menyediakan platform untuk user agar dapat membaca buku, review buku favorit, dan fitur personal diary. Terinspirasi dari website bertema literasi terkemuka seperti Goodreads dan LibraryThing. (bisa dilengkapin lagi maybe)
 
 ---
 
@@ -29,8 +29,8 @@
 4. **Modul Request Buku** 📖
    - **Penjelasan:** User dapat meminta buku tertentu melalui modul ini.
 
-5. **Isi en dewee** ❓
-   - **Penjelasan:** (diisi sesuai dengan penjelasan modul)
+5. **Modul Diary/Personal Journal** 📔
+   - **Penjelasan:** User dapat mengetik apapun didalamnya dan mencatat pemikiran, pengalaman, dan refleksi pribadi mereka mengenai literasinya (User harus sign up/memiliki akun)
 
 ---
 
