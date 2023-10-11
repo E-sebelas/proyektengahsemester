@@ -18,10 +18,10 @@ Website bertema literasi oleh Kelompok E-sebelas yang menyediakan platform untuk
 ### **Daftar Modul:** 📋
 
 1. **Modul Membaca Buku (Read Book)** 🔍
-   - **Penjelasan:** Berfungsi sebagai mesin pencarian buku. Ketika judul buku di-hover, akan muncul 2 opsi: "Read" yang memungkinkan user untuk membaca buku dan tombol favorit (logo hati) yang memungkinkan user untuk menambahkan buku ke dalam daftar favorit mereka.
+   - **Penjelasan:** Berfungsi sebagai mesin pencarian buku. Ketika judul buku di-hover, akan muncul 2 opsi: "Read" yang memungkinkan user untuk membaca buku dan tombol favorit (logo hati) yang memungkinkan user untuk menambahkan buku ke dalam daftar favorit mereka. Bisa filter search buku nambahin fitur review dan rating.
 
-2. **Modul Favorit Buku (My Favorites)** ❤️
-   - **Penjelasan:** Menampilkan daftar buku yang telah difavoritkan. User dapat membaca buku langsung dari daftar ini atau menghapusnya dari daftar favorit.
+2. **Modul Favorit Buku (My Favorites) / Forum** ❤️
+   - **Penjelasan:** Menampilkan daftar buku yang telah difavoritkan. User dapat membaca buku langsung dari daftar ini atau menghapusnya dari daftar favorit. Forum diskusi per buku.
 
 3. **Modul Report** 📝
    - **Penjelasan:** Memberikan laporan atau pengaduan terkait buku atau isu lainnya, seperti buku yang rusak.
