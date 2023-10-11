@@ -9,7 +9,7 @@
 
 ---
 
-### **Konsep dan Cerita Aplikasi:** 🎨
+### **Konsep dan Cerita Aplikasi BooKoo:** 🎨
 Website bertema literasi oleh Kelompok E-sebelas yang menyediakan platform untuk user agar dapat membaca buku, review buku favorit, dan fitur personal diary. Terinspirasi dari website bertema literasi terkemuka seperti Goodreads dan LibraryThing. (bisa dilengkapin lagi maybe)
 
 ---
