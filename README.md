@@ -1,5 +1,4 @@
 ## **Proyek Tengah Semester PBP Kelompok E11** 📚
----
 
 ### **Anggota Kelompok:** 👥
 1. **Andhika Finnanda Rayhan** - 2206826551
@@ -20,8 +19,8 @@ Website bertema literasi oleh Kelompok E-sebelas yang menyediakan platform untuk
 1. **Modul Membaca Buku (Read Book)** 🔍
    - **Penjelasan:** Berfungsi sebagai mesin pencarian buku. Ketika judul buku di-hover, akan muncul 2 opsi: "Read" yang memungkinkan user untuk membaca buku dan tombol favorit (logo hati) yang memungkinkan user untuk menambahkan buku ke dalam daftar favorit mereka. Bisa filter search buku nambahin fitur review dan rating.
 
-2. **Modul Favorit Buku (My Favorites) / Forum** ❤️
-   - **Penjelasan:** Menampilkan daftar buku yang telah difavoritkan. User dapat membaca buku langsung dari daftar ini atau menghapusnya dari daftar favorit. Forum diskusi per buku.
+2. **Modul Forum Discussion** 👨🏾‍🤝‍👨🏻
+   - **Penjelasan:** Sebagai wadah untuk komunitas usr mendiskusikan mengenai buku/buku favorit mereka
 
 3. **Modul Report** 📝
    - **Penjelasan:** Memberikan laporan atau pengaduan terkait buku atau isu lainnya, seperti buku yang rusak.
@@ -35,7 +34,7 @@ Website bertema literasi oleh Kelompok E-sebelas yang menyediakan platform untuk
 ---
 
 ### **Sumber Dataset:** 🗃️
-**(omongin bareng bareng yu)**
+**Kaggle: ** https://www.kaggle.com/datasets/mateibejan/15000-gutenberg-books
 
 ---
 
