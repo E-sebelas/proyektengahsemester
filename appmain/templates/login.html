@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+    <title>Login</title>
+    
+{% endblock meta %}
+
+{% block content %}
+{% include 'navigationbar.html' %}
+<style>
+    .custom-button {
+        background-color: #9DC08B;
+        color: #EDF1D6;
+        border: 2px solid #40513B;
+        border-radius: 5px;
+    }
+
+    .custom-button:hover {
+        background-color: #40513B;
+        color: #EDF1D6;
+    }
+
+    .register-link {
+        color: #40513B;
+        font-family: 'Glorifydemo-BW3J3', sans-serif;
+        text-decoration: none;
+    }
+
+    .register-link:hover {
+        color: #9DC08B;
+    }
+
+    /* Mengatur kolom input agar menjadi lurus */
+    input[type="text"],
+    input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #40513B;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+
+    h1 {
+        padding-top: 20px;
+    }
+</style>
+
+<div class="container">
+    <h1 style="color: #609966; font-family: 'Glorifydemo-BW3J3', sans-serif;">Login</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" class="form-control" id="username" name="username" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" class "form-control" id="password" name="password" required>
+        </div>
+        <button type="submit" class="btn btn-primary custom-button">Login</button>
+    </form>
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <p style="color: #609966; font-family: 'Glorifydemo-BW3J3', sans-serif;">
+        If you don't have an account, <a href="#" id="register-link" class="register-link" data-toggle="modal" data-target="#register-modal">register here</a>.
+    </p>
+</div>
+
+
+<!-- Modal -->
+<div class="modal" tabindex="-1" role="dialog" id="register-modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background-color: #EDF1D6; color: #40513B; font-family: 'Glorifydemo-BW3J3', sans-serif;">
+            <div class="modal-header" style="background-color: #9DC08B; color: #EDF1D6;">
+                <h5 class="modal-title">Register as Admin or User</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" style="background: none; border: 0; font-size: 30px; color: red;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                
+            </div>
+            <div class="modal-body">
+                <p>Do you want to register as an admin or a user?</p>
+            </div>
+            <div class="modal-footer">
+                <a href="{% url 'admin_register' %}" class="btn btn-primary" style="background-color: #9DC08B; color: #EDF1D6;">Admin</a>
+                <a href="{% url 'user_register' %}" class="btn btn-secondary" style="background-color: #609966; color: #EDF1D6;">User</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function() {
+        $("#register-link").click(function() {
+            $("#register-modal").modal('show');
+        });
+    });
+</script>
+
+{% endblock content %}
