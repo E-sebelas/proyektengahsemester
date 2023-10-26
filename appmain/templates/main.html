@@ -4,10 +4,83 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BooKoo</title>
+    <style>
+        body{
+            background-color: #40513B;
+            font-family: 'Roboto Slab', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .title{
+            position: absolute;
+            top: 22vh;
+            left: 30px;
+            font-size: 64px;
+            font-weight: 600;
+            color: #f0f0f0;
+
+        }
+
+        .menu{
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .menu:hover{
+            transform: translateY(-5px);
+        }
+
+        .content{
+            flex: 6;
+            display: flex;
+            background-color: #40513B;
+        }
+
+        #1{
+            background-image: url("C:\Users\andhika rayhan\OneDrive\Documents\PBP\midtermproject\appmain\static\books.jpg");
+        }
+
+    </style>
+    
+
 </head>
 <body>
+    <div class="title">
+        {{name}}
+    </div>
+    <div class="content" style="width: 95%; position: absolute; bottom: 50px; right: 1cm; justify-content: space-between; align-items: flex-end; display: inline-flex;">
+        <div class="menu" id="1" style="width: 241px; height: 302px; position: relative;">
+            <div style="width: 241px; height: 302px; left: 0px; top: 0px; position: absolute; background: #D9D9D9; box-shadow: 0px 10px 4px 2px rgba(0, 0, 0, 0.25); border-radius: 10px"></div>
+            <div style="left: 18px; top: 14px; position: absolute; color: black; font-size: 32px; font-weight: 700; word-wrap: break-word">Read Book</div>
+            <div style="width: 196px; height: 189px; left: 18px; top: 66px; position: absolute; color: black; font-size: 20px; font-weight: 400; word-wrap: break-word">Search and menu your favorite books</div>
+        </div>
 
-        
-        
+        <div class="menu" style="width: 241px; height: 302px; position: relative;">
+            <div style="width: 241px; height: 302px; left: 0px; top: 0px; position: absolute; background: #D9D9D9; box-shadow: 0px 10px 4px 2px rgba(0, 0, 0, 0.25); border-radius: 10px"></div>
+            <div style="left: 18px; top: 14px; position: absolute; color: black; font-size: 32px; font-weight: 700; word-wrap: break-word">Forum Chat</div>
+            <div style="width: 196px; height: 189px; left: 18px; top: 66px; position: absolute; color: black; font-size: 20px; font-weight: 400; word-wrap: break-word">Discuss with our community</div>
+        </div>
+
+        <div class="menu" style="width: 241px; height: 302px; position: relative;">
+            <div style="width: 241px; height: 302px; left: 0px; top: 0px; position: absolute; background: #D9D9D9; box-shadow: 0px 10px 4px 2px rgba(0, 0, 0, 0.25); border-radius: 10px"></div>
+            <div style="left: 18px; top: 14px; position: absolute; color: black; font-size: 32px; font-weight: 700; word-wrap: break-word">Report a Book</div>
+            <div style="width: 196px; height: 189px; left: 18px; top: 66px; position: absolute; color: black; font-size: 20px; font-weight: 400; word-wrap: break-word">Give us a feedback on anything</div>
+        </div>
+        <div class="menu" style="width: 241px; height: 302px; position: relative;">
+            <div style="width: 241px; height: 302px; left: 0px; top: 0px; position: absolute; background: #D9D9D9; box-shadow: 0px 10px 4px 2px rgba(0, 0, 0, 0.25); border-radius: 10px"></div>
+            <div style="left: 18px; top: 14px; position: absolute; color: black; font-size: 32px; font-weight: 700; word-wrap: break-word">Book Request</div>
+            <div style="width: 196px; height: 189px; left: 18px; top: 66px; position: absolute; color: black; font-size: 20px; font-weight: 400; word-wrap: break-word">Submit a book you would like to be available</div>
+        </div>
+        <div class="menu" style="width: 241px; height: 302px; position: relative;">
+            <div style="width: 241px; height: 302px; left: 0px; top: 0px; position: absolute; background: #D9D9D9; box-shadow: 0px 10px 4px 2px rgba(0, 0, 0, 0.25); border-radius: 10px"></div>
+            <div style="left: 18px; top: 14px; position: absolute; color: black; font-size: 32px; font-weight: 700; word-wrap: break-word">Diary</div>
+            <div style="width: 196px; height: 189px; left: 18px; top: 66px; position: absolute; color: black; font-size: 20px; font-weight: 400; word-wrap: break-word">Write down your thoughts</div>
+        </div>
+    </div>
+
 </body>
 </html>
