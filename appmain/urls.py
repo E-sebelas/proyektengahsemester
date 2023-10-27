@@ -1,7 +1,9 @@
 from django.urls import path
 from . import views
 from django.contrib.auth.views import LoginView
+from appmain.views import get_books
 
+app_name="appmain"
 
 urlpatterns = [
     # URL untuk halaman pendaftaran
@@ -11,6 +13,7 @@ urlpatterns = [
     path('userregister/', views.user_register, name='user_register'),
     path('logout/', views.logout_user, name='logout'),
     path('adminmenu/', views.admin_menu, name='admin_menu'),
+    path("get_books/",get_books, name="get_books"),
     # Tambahkan URL lainnya sesuai kebutuhan
 ]
 

@@ -6,6 +6,9 @@ from django.urls import reverse
 from django.contrib.auth.forms import UserCreationForm
 from .forms import AdminRegistrationForm
 from django.http import HttpResponseRedirect
+from appmain.models import Book
+from django.http import HttpResponse
+from django.core import serializers
 
 
 
@@ -72,3 +75,10 @@ from django.shortcuts import render
 def admin_menu(request):
     # Tambahkan logika yang diperlukan untuk halaman admin menu di sini
     return render(request, 'admin_menu.html')
+
+
+
+def get_books(request):
+    data=Book.objects.all()
+    return HttpResponse(serializers.serialize("json",data),
+    content_type="application/json")

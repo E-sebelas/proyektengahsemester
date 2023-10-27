@@ -17,8 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+appname="appmain"
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('appmain.urls')),  # Tambahkan baris ini untuk mengimpor URL dari aplikasi 'appmain'
-]
+    path('api/appmain/',include("appmain.urls")),
+    ]
 #testes
