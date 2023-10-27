@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block meta %}
+    <title>Admin Menu</title>
+    
+{% endblock meta %}
+    
+{% block content %}
+    <style>
+        /* Warna latar belakang dan teks */
+        body {
+            background-color: #EDF1D6;
+            color: #40513B;
+        }
+
+        /* Style untuk judul */
+        h1 {
+            padding: 20px;
+            font-family: 'Glorifydemo-BW3J3', sans-serif;
+        }
+
+        /* Style untuk tombol */
+        .btn-primary {
+            background-color: #9DC08B;
+            color: #EDF1D6;
+            border: none;
+            border-radius: 0;
+            width: 75%; /* Membuat tombol mengikuti lebar layar */
+            padding: 10px;
+            margin: 10px auto; /* Mengatur margin kiri dan kanan menjadi auto */
+            display: block; /* Mengubah tombol menjadi elemen blok */
+        }
+
+        /* Hover effect pada tombol */
+        .btn-primary:hover {
+            background-color: #609966;
+        }
+
+        /* Spasi antara tombol Personal Journal dan tombol Back */
+        .spacer {
+            height: 50px;
+        }
+
+        .btn-back {
+            background-color: #9DC08B;
+            color: #EDF1D6;
+            border: none;
+            border-radius: 0;
+            width: 25%; /* Mengurangi lebar tombol "Back" */
+            padding: 5px; /* Mengurangi padding tombol "Back" */
+            margin: 5px auto; /* Mengatur margin kiri dan kanan menjadi auto */
+            display: block; /* Mengubah tombol menjadi elemen blok */
+        }
+
+        /* Hover effect pada tombol */
+        .btn-back:hover {
+            background-color: #609966;
+        }
+
+        .btn-back:active {
+            background-color: #9DC08B;
+        }
+    </style>
+
+    <h1>Admin Menu</h1>
+
+    <!-- Tombol untuk Modul Membaca Buku -->
+    <a class="btn btn-primary" href="#">Modul Membaca Buku 🔍</a>
+
+    <!-- Tombol untuk Modul Forum Discussion -->
+    <a class="btn btn-primary" href="#">Modul Forum Discussion 👨🏾‍🤝‍👨🏻</a>
+
+    <!-- Tombol untuk Modul Report -->
+    <a class="btn btn-primary" href="#">Modul Report 📝</a>
+
+    <!-- Tombol untuk Modul Request Buku -->
+    <a class="btn btn-primary" href="#">Modul Request Buku 📖</a>
+
+    <!-- Tombol untuk Modul Diary/Personal Journal -->
+    <a class="btn btn-primary" href="#">Personal Journal 📔</a>
+
+    <!-- Spasi antara tombol Personal Journal dan tombol Back -->
+    <div class="spacer"></div>
+
+    <!-- Tombol "Back" -->
+    <a class="btn btn-back" href="javascript:history.back();">Back</a>
+{% endblock content %}

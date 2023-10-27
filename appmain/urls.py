@@ -13,3 +13,4 @@ urlpatterns = [
     path('adminmenu/', views.admin_menu, name='admin_menu'),
     # Tambahkan URL lainnya sesuai kebutuhan
 ]
+

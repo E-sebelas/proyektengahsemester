@@ -1,0 +1,9 @@
+/* style.css */
+
+@font-face {
+    font-family: 'Glorifydemo-BW3J3';
+    src: url('/static/fonts/Glorifydemo-BW3J3.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  

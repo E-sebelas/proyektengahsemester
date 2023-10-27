@@ -1,0 +1,73 @@
+<!-- registration_admin.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+    <title>Register Admin</title>
+    
+{% endblock meta %}
+{% block content %}
+<style>
+    /* Warna latar belakang dan teks */
+    body {
+        background-color: #EDF1D6;
+        color: #40513B;
+    }
+
+    /* Style untuk judul */
+    h1 {
+        color: #9DC08B; /* Warna judul */
+        padding: 20px;
+        font-family: 'Glorifydemo-BW3J3', sans-serif;
+    }
+
+    /* Style untuk form */
+    form {
+        background-color: #EDF1D6;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(64, 81, 59, 0.2);
+        margin: 20px auto;
+        width: 50%;
+    }
+
+    /* Style untuk input dan label */
+    input[type="text"],
+    input[type="password"],
+    input[type="email"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #40513B;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+
+    label {
+        color: #40513B;
+        font-weight: bold;
+        font-family: 'Glorifydemo-BW3J3', sans-serif;
+    }
+
+    /* Style untuk tombol */
+    input[type="submit"] {
+        background-color: #9DC08B;
+        color: #EDF1D6;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+
+    /* Hover effect pada tombol */
+    input[type="submit"]:hover {
+        background-color: #609966;
+    }
+</style>
+
+<form method="post">
+    {% csrf_token %}
+    <h1>Admin Registration</h1>
+    {{ form.as_p }}
+    <input type="submit" value="Register as Admin">
+</form>
+{% endblock content %}
