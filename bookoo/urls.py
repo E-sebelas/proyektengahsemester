@@ -21,4 +21,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('appmain.urls')),  # Tambahkan baris ini untuk mengimpor URL dari aplikasi 'appmain'
 ]
-
+#testes
