@@ -72,13 +72,4 @@ def logout_user(request):
 
 from django.shortcuts import render
 
-def admin_menu(request):
-    # Tambahkan logika yang diperlukan untuk halaman admin menu di sini
-    return render(request, 'admin_menu.html')
-
-
-
-def get_books(request):
-    data=Book.objects.all()
-    return HttpResponse(serializers.serialize("json",data),
-    content_type="application/json")
+# Create your views here.
