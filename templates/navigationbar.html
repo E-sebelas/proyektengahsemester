@@ -54,20 +54,19 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" >Forum Discussion</a>
+                    <a class="nav-link" href="#" onclick="checkLogin(event)">Forum Discussion</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" >Report Book</a>
+                    <a class="nav-link" href="#" onclick="checkLogin(event)">Report Book</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" >Request Book</a>
+                    <a class="nav-link" href="#" onclick="checkLogin(event)">Request Book</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" >Personal Journal</a>
+                    <a class="nav-link" href="#" onclick="checkLogin(event)">Personal Journal</a>
                 </li>
             </ul>
         </div>
-
         {% if request.session.user_logged_in %}
             <div class="user-info ml-auto">
                 <div class="dropdown">
@@ -93,3 +92,32 @@
         {% endif %}
     </div>
 </nav>
+
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginModalLabel">Login Required</h5>
+                {% comment %} <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button> {% endcomment %}
+            </div>
+            <div class="modal-body">
+                <p>You must log in first to access this feature.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a class="btn btn-primary" href="{% url 'login' %}">Login</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function checkLogin(event) {
+        if (!{{ request.session.user_logged_in|default:"false" }}) {
+            event.preventDefault(); // Menghentikan navigasi saat tautan diklik
+            $('#loginModal').modal('show');
+        }
+    }
+</script>
