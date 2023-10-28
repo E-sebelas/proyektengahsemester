@@ -3,6 +3,6 @@ from django.db import models
 
 # Create your models here.
 class Book(models.Model):
-    title = models.CharField(max_length=255)
-    author = models.CharField(max_length=255)
-    link = models.URLField()
+    title = models.CharField(max_length=255, null=True, blank=True)
+    author = models.CharField(max_length=255, null=True, blank=True)
+    link = models.URLField( null=True, blank=True)
