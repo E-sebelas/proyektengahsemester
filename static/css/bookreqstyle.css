@@ -64,8 +64,9 @@
 }
 
 .left-content {
+  justify-content: center;
   text-align: center;
-  padding: 40px; /* Increase the padding by 50% */
+  padding: 20px; /* Increase the padding by 50% */
 }
 
 .custom-button {
