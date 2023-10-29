@@ -50,7 +50,7 @@ def user_register(request):
         if form.is_valid():
             # Proses pendaftaran pengguna di sini
             form.save()
-            return redirect('login')  # Ganti dengan halaman dashboard pengguna
+            return redirect('appmain:login')  # Ganti dengan halaman dashboard pengguna
     else:
         form = UserCreationForm()
     return render(request, 'registration_user.html', {'form': form})
@@ -65,7 +65,7 @@ def login_user(request):
             request.session['user_logged_in'] = True
             request.session['username'] = user.username
             request.session['is_admin'] = user.is_staff  # Sesuaikan sesuai logika Anda
-            return redirect('show_main')
+            return redirect('appmain:show_main')
         else:
             messages.info(request, 'Sorry, incorrect username or password. Please try again.')
     context = {}
@@ -89,6 +89,9 @@ def admin_menu(request):
     # Tambahkan logika yang diperlukan untuk halaman admin menu di sini
     return render(request, 'admin_menu.html')
 
+def show_favorite(request):
+    # Fungsi ini akan merender halaman main.html dan mengembalikannya sebagai respons.
+    return render(request, 'favorites.html')
 
 @csrf_exempt
 def favorite(request):
@@ -96,11 +99,15 @@ def favorite(request):
         Title = request.POST.get("Title")
         user = request.user
 
-        new_product = Favorite(Title=Title, user=user)
+        new_product = Favorite(user=user, Title=Title)
         new_product.save()
 
         return HttpResponse(b"CREATED", status=201)
 
     return HttpResponseNotFound()
+
+def get_favorites(request):
+    favorites = Favorite.objects.filter(user=request.user)
+    return HttpResponse(serializers.serialize('json', favorites))
 
 # Create your views here.

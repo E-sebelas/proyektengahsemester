@@ -15,13 +15,13 @@
                   {% csrf_token %}
                   <div class="mb-3">
                       <label for="title" class="col-form-label">Title:</label>
-                      <input type="text" class="form-control" id="title" name="title"></input>
+                      <input type="text" class="form-control" id="Title" name="Title"></input>
                   </div>
               </form>
           </div>
           <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Favorite It</button>
+              <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal" >Favorite It</button>
           </div>
       </div>
   </div>
@@ -85,7 +85,7 @@
                 <h5 class="card-title">${item.fields.Title}</h5>
                   <p class="card-text">${item.fields.Author}</p>
                     <a href="${item.fields.Link}" class="btn btn-primary">Link</a>
-                    <button class="btn btn-primary"data-bs-toggle="modal" data-bs-target="#exampleModal">Favorite It
+                    <button class="btn btn-primary"data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="checkLogin(event)">Favorite It
                     <i class="fa fa-heart"></i>
                     </button>
               </div>
@@ -114,7 +114,7 @@
                 <h5 class="card-title">${item.fields.Title}</h5>
                   <p class="card-text">${item.fields.Author}</p>
                     <a href="${item.fields.Link}" class="btn btn-primary">Link</a>
-                    <button class="btn btn-primary"data-bs-toggle="modal" data-bs-target="#exampleModal">Favorite It
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="checkLogin(event)">Favorite It
                     <i class="fa fa-heart"></i>
                     </button>
               </div>
@@ -141,50 +141,15 @@
   document.getElementById("search").onclick = refreshBooksFilter
   document.getElementById("button_add").onclick = addFavorite
 
+  function checkLogin(event) {
+        if (!{{ request.session.user_logged_in|default:"false" }}) {
+            event.preventDefault(); // Menghentikan navigasi saat tautan diklik
+            $('#loginModal').modal('show');
+        }
+  }
   
 
-  document.addEventListener("DOMContentLoaded", (event) => {
-    document.querySelectorAll(".bookmark_form").forEach((form) => {
-      form.addEventListener("submit", function (event) {
-        event.preventDefault();
-        fetch(this.action, {
-          method: this.method,
-          body: new FormData(this),
-          headers: {
-            "X-Requested-With": "XMLHttpRequest", // NEEDED FOR DJANGO TO TREAT THIS AS AJAX
-            "X-CSRFToken": this.querySelector("input[name=csrfmiddlewaretoken]")
-              .value, // CSRF TOKEN
-          },
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            if (data.status === "bookmarked") {
-              this.querySelector(".bookmark-button").classList.add(
-                "bookmarked"
-              );
-            } else {
-              this.querySelector(".bookmark-button").classList.remove(
-                "bookmarked"
-              );
-            }
-          });
-      });
-    });
-  });
-  $(document).ready(function(){
-	    $('.data').load("data.php");
-	    $("#search").click(function(){
-	    	var title = $("#s_title").val();
-	    	$.ajax({
-	            type: 'POST',
-	            url: "data.php",
-	            data: {jurusan: jurusan},
-	            success: function(hasil) {
-	                $('.data').html(hasil);
-	            }
-	        });
-	    });
-	});
+  
 
 
 </script>
