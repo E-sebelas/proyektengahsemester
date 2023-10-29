@@ -9,5 +9,5 @@ class Book(models.Model):
     Link = models.URLField(null=True, blank=True)
 
 class Favorite(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
