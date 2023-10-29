@@ -9,9 +9,12 @@ from django.http import HttpResponseRedirect
 from appmain.models import Book
 from django.http import HttpResponse
 from django.core import serializers
-from appmain.models import Book
+from appmain.models import Book, Favorite
 from django.http import HttpResponse
 from django.core import serializers
+from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
 
 
 
@@ -78,9 +81,25 @@ def get_books(request):
     return HttpResponse(serializers.serialize("json",data),
     content_type="application/json")
 
-from django.shortcuts import render
+def get_books_json(request):
+    data=Book.objects.all()
+    return HttpResponse(serializers.serialize("json",data))
 
 def admin_menu(request):
     # Tambahkan logika yang diperlukan untuk halaman admin menu di sini
     return render(request, 'admin_menu.html')
+
+@csrf_exempt
+def favorite(request, key):
+    book = get_object_or_404(Book, pk=key)
+    if request.method == 'POST':
+        user = request.user
+        try:
+            existing_favorite = Favorite.objects.get(user=user, book=book)
+            existing_favorite.delete()
+            return JsonResponse({'status': 'unbookmarked'})
+        except Favorite.DoesNotExist:
+            new_favorite = Favorite(user=user, book=book)
+            new_favorite.save()
+            return JsonResponse({'status': 'bookmarked'})
 # Create your views here.
