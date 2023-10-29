@@ -1,0 +1,100 @@
+{% extends 'base.html' %} {% block content %} 
+{% include 'navigationbar.html' %}
+<form class="w-50 mx-auto mt-5 border border-success p-5" id="post-form">
+    {% csrf_token %}
+    <h1>Create your post</h1>
+    <h5 class="text-success"></h5>
+
+    <label for="author" class="form-label">Author</label>
+    <input
+        required
+        type="text"
+        class="form-control mb-3"
+        id="author"
+        name="author"
+        placeholder=""
+    />
+
+    <label for="title" class="form-label">Title</label>
+    <input
+        required
+        type="text"
+        class="form-control mb-3"
+        id="title"
+        name="title"
+        placeholder=""
+    />
+
+    <label for="content" class="form-label"
+        >Your post content</label
+    >
+    <textarea
+        required
+        class="form-control mb-3"
+        id="content"
+        name="content"
+        rows="3"
+    ></textarea>
+
+    <label for="book_name" class="form-label">Book's name</label>
+    <input
+        required
+        type="text"
+        class="form-control mb-3"
+        id="book_name"
+        name="book_name"
+        placeholder=""
+    />
+
+    <label for="rating" class="form-label"
+        >Rating (1-5)</label
+    >
+    <input
+        required
+        type="number"
+        class="form-control mb-3"
+        id="rating"
+        name="rating"
+        placeholder=""
+    />
+
+    <button type="submit" class="btn btn-success">Submit</button>
+</form>
+
+<script type="text/javascript">
+    $(document).on("submit", "#post-form", function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: "/create",
+            data: {
+                title: $("#title").val(),
+                content: $("#content").val(),
+                book_name: $("#book_name").val(),
+                rating: $("#rating").val(),
+                csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
+                author: $("#author").val(),
+            },
+            success: function (data) {
+                "h5".html(data);
+            },
+        });
+    });
+</script>
+
+{% for post in posts %}
+
+<div class="position-relative">
+    <div class="card w-50 mx-auto my-5">
+        <div class="card-header">
+            <p class="mr-2" href="#">{{ post.author }}</p>
+        </div>
+        <div class="card-body">
+            <h1 class="card-title"><a href="#">{{ post.title }}</a></h1>
+            <p class="card-text">{{ post.content }}</p>
+            <p class="card-text">{{ post.book_name }}</p>
+            <p class="card-text">{{ post.rating }}</p>
+        </div>
+    </div>
+</div>
+{% endfor %} {% endblock content %}

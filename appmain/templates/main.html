@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+{% include 'navigationbar.html' %}
+  <div class="container">
+    <h1 style="color: #609966; font-family: 'Glorifydemo-BW3J3', sans-serif; padding-top: 20px;">What book do you want to read today?</h1>
+      <!-- Search bar menggunakan Bootstrap -->
+      <div class="input-group mt-3">
+        <input type="text" class="form-control" placeholder="Cari buku..." style="background-color: #EDF1D6; color: #40513B;">
+        <div class="input-group-append">
+          <button class="btn btn-primary" type="button" style="background-color: #9DC08B; border: 1px solid #40513B;">Cari</button>
+        </div>
+      </div>
+  
+    <h2 style="color: #40513B; font-family: 'Glorifydemo-BW3J3', sans-serif;">Sub Judul</h2>
+
+
+    <div class="row">
+      <div class="col-md-6">
+        <p style="color: #609966;">Ini adalah teks dalam kolom pertama.</p>
+      </div>
+      <div class="col-md-6">
+        <p style="color: #609966;">Ini adalah teks dalam kolom kedua.</p>
+      </div>
+    </div>
+
+    <button class="btn btn-primary" type="button" style="background-color: #609966;">Tombol Primer</button>
+    <button class="btn btn-secondary" type="button" style="background-color: #40513B;">Tombol Sekunder</button>
+
+    <div class="alert alert-success mt-3" role="alert" style="background-color: #9DC08B; color: #EDF1D6;">
+      Ini adalah pesan sukses.
+    </div>
+  </div>
+{% endblock content %}
+

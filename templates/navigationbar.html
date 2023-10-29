@@ -1,0 +1,123 @@
+<style>
+    .custom-navbar {
+        background-color: #EDF1D6;
+    }
+
+    .custom-navbar .navbar-brand {
+        color: #40513B;
+        font-family: 'Glorifydemo-BW3J3', sans-serif;
+    }
+
+    .custom-navbar .navbar-nav .nav-link {
+        color: #40513B;
+    }
+
+    .custom-navbar .navbar-nav .nav-link:hover {
+        color: #9DC08B;
+        cursor: pointer; 
+    }
+
+    .custom-navbar .navbar-brand {
+        padding-top: 11px;
+    }
+
+    .dropdown-menu a {
+        color: #40513B;
+    }
+
+    .dropdown-menu a:hover {
+        color: #9DC08B;
+    }
+
+    /* Styling tombol login */
+    .custom-navbar .login-button {
+        background-color: #9DC08B;
+        color: #EDF1D6;
+        border: 2px solid #40513B;
+        border-radius: 5px;
+    }
+
+    /* Styling saat tombol login dihover */
+    .custom-navbar .login-button:hover {
+        background-color: #40513B;
+        color: #EDF1D6;
+    }
+
+</style>
+
+<nav class="navbar navbar-expand-lg custom-navbar">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'show_main' %}">BOOKOO</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/forum" onclick="checkLogin(event)">Forum Discussion</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="checkLogin(event)">Report Book</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="checkLogin(event)">Request Book</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="checkLogin(event)">Personal Journal</a>
+                </li>
+            </ul>
+        </div>
+        {% if request.session.user_logged_in %}
+            <div class="user-info ml-auto">
+                <div class="dropdown">
+                    <a class="btn login-button dropdown-toggle" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {% if request.session.is_admin %}
+                            Hello Admin, {{ request.session.username }}
+                        {% else %}
+                            Hello User, {{ request.session.username }}
+                        {% endif %}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="userDropdown">
+                        <a class="dropdown-item" href="#">Account Info</a>
+                        <a class="dropdown-item" href="#">Favorite Book List</a>
+                        {% if request.session.is_admin %}
+                            <a class="dropdown-item" href="{% url 'admin_menu' %}">Admin Menu</a>
+                        {% endif %}
+                        <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <a class="btn login-button ml-auto" href="{% url 'login' %}">Login</a>
+        {% endif %}
+    </div>
+</nav>
+
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginModalLabel">Login Required</h5>
+                {% comment %} <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button> {% endcomment %}
+            </div>
+            <div class="modal-body">
+                <p>You must log in first to access this feature.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a class="btn btn-primary" href="{% url 'login' %}">Login</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function checkLogin(event) {
+        if (!{{ request.session.user_logged_in|default:"false" }}) {
+            event.preventDefault(); // Menghentikan navigasi saat tautan diklik
+            $('#loginModal').modal('show');
+        }
+    }
+</script>
