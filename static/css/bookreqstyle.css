@@ -1,0 +1,84 @@
+@font-face {
+  font-family: 'Glorifydemo-BW3J3';
+  src: url('/static/fonts/Glorifydemo-BW3J3.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.left-content{
+  text-align: center !important;
+  padding: 40px !important;
+}
+/* Increase size by 50% for #req_table */
+#req_table {
+  width: 150%; /* Increase the width by 50% */
+  border-collapse: collapse;
+  margin: 30px 0;
+  text-align: center;
+}
+
+#req_table th{
+  border: 2px solid black;
+  background-color: #40513B;
+  color: white;
+  padding: 12px;
+  text-align: center;
+}
+#req_table td {
+  border: 2px solid #40513B;
+  background-color: #9DC08B;
+  padding: 12px; /* Increase the padding by 50% */
+  text-align: center;
+}
+
+#req_table tr:hover{
+  background-color: #609966;
+}
+
+.styled-table {
+  width: 150%; /* Increase the width by 50% */
+  border-collapse: collapse;
+  margin: 30px 0; /* Increase the margin by 50% */
+}
+
+.styled-table th{
+  background-color:#40513B;
+}
+.styled-table td {
+  border: 2px solid #ddd;
+  background-color: #609966;
+  padding: 12px; /* Increase the padding by 50% */
+  text-align: center;
+}
+
+.styled-table tr:hover{
+  background-color: #609966;
+}
+
+/* Increase height by 50% for .reqcontainer */
+.reqcontainer {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  height: 60vh; /* Increase the height by 50% */
+}
+
+.left-content {
+  text-align: center;
+  padding: 40px; /* Increase the padding by 50% */
+}
+
+.custom-button {
+  background-color: #609966;
+  color: #fff;
+  border: none;
+  padding: 15px 30px; /* Increase the padding by 50% */
+  border-radius: 5px;
+  font-size: 24px; /* Increase the font size by 50% */
+}
+
+.custom-button:hover {
+  background-color: #40513B;
+  color: #fff;
+  /* Add any other styles for button hover state */
+}
