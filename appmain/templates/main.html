@@ -87,7 +87,7 @@
       i++
       var buttonId = 'button' + i;
       if(item.pk%10==0){
-        htmlString += `<div class="card-deck d-flex justify-content-center">`
+        htmlString += `<div class="card-deck d-flex">`
       }
       htmlString += `
             <div class="card" style="width: 18rem;">
@@ -112,14 +112,14 @@
     document.getElementById("book_table").innerHTML = ""
     var titleSearch = $("#s_title").val()
     const books = await getBooks()
-    var data_filter = books.filter( element => element.fields.Title.includes(titleSearch))
+    var data_filter = books.filter( element => element.fields.Title.toLowerCase().includes(titleSearch))
     let htmlString = ``
     var i=0
     data_filter.forEach((item) => {
       i++
       var buttonId = 'button' + i;
       if(item.pk%10==0){
-        htmlString += `<div class="card-deck d-flex justify-content-center">`
+        htmlString += `<div class="card-deck d-flex">`
       }
       htmlString += `
             <div class="card" style="width: 18rem;">
