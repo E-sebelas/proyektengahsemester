@@ -10,4 +10,4 @@ class Book(models.Model):
 
 class Favorite(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.CharField(max_length=255)
+    Title = models.CharField(max_length=255)

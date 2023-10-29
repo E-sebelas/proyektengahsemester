@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 from django.contrib.auth.views import LoginView
-from appmain.views import get_books, get_books_json, favorite
+from appmain.views import get_books, get_books_json, favorite, get_favorites, show_favorite
 
 app_name='appmain'
 
@@ -15,6 +15,8 @@ urlpatterns = [
     path('adminmenu/', views.admin_menu, name='admin_menu'),
     path("get_books/",get_books, name="get_books"),
     path("get_books_json/",get_books_json, name="get_books_json"),
-    path('favorite/<int:pk>/', favorite, name='favorite')
+    path('favorite/', favorite, name='favorite'),
+    path('get_favorites/', get_favorites, name='get_favorites'),
+    path('show_favorite/', show_favorite, name='show_favorite'),
     # Tambahkan URL lainnya sesuai kebutuhan
 ]

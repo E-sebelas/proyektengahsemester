@@ -79,7 +79,7 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="userDropdown">
                         <a class="dropdown-item" href="#">Account Info</a>
-                        <a class="dropdown-item" href="#">Favorite Book List</a>
+                        <a class="dropdown-item" href="{% url 'appmain:show_favorite' %}">Favorite Book List</a>
                         {% if request.session.is_admin %}
                             <a class="dropdown-item" href="{% url 'appmain:admin_menu' %}">Admin Menu</a>
                         {% endif %}
