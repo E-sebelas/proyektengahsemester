@@ -89,14 +89,14 @@
                 <h5 class="card-title">${item.fields.Title}</h5>
                   <p class="card-text">${item.fields.Author}</p>
                     <a href="${item.fields.Link}" class="btn btn-primary">Link</a>
-                    <form class="bookmark_form" method="POST" action="{% url 'appmain:favorite' 'kwargs={ 'key':${item.pk} }' %}">
+                    <form class="bookmark_form" method="POST">
                       {% csrf_token %}
-                    <input type="hidden" name="bookmarked" value="{{ "${item.pk}" }}" />
-                    <a class="btn btn-primary" onclick=checkLogin(event) method="POST">Favorite It
-                    <i class="fa fa-bookmark"></i>
-                    </a>
-                    </form>
                     
+                    <button class="btn bookmark-button {% if book in bookmarks %}bookmarked{% endif %}" type="submit">
+                    <i class="fa fa-bookmark"></i>
+                    </button>
+                    </form>
+                    <a class="btn btn-primary" onclick=checkLogin(event) method="POST">Favorite It</a>
               </div>
             </div>`
       if(item.pk%5==0){
