@@ -14,8 +14,8 @@
               <form id="form" onsubmit="return false;">
                   {% csrf_token %}
                   <div class="mb-3">
-                      <label for="title" class="col-form-label">Title:</label>
-                      <input type="text" class="form-control" id="Title" name="Title"></input>
+                      <label id="idTitle" for="title" class="col-form-label">Title:</label>
+                      <input id="inputTitle" type="text" class="form-control" id="idTitle" name="Title" value="Title"></input>
                   </div>
               </form>
           </div>
@@ -29,6 +29,7 @@
 <style>
   .card {
     background-color: '#609966';
+    color: '#609966';
   }
 
   .card-title {
@@ -68,6 +69,11 @@
 </div>
 
 <script>
+  function handleButtonClick(event) {
+    buttonId = event.target.id;
+    console.log(buttonId);
+  }
+  var buttonId = "button1";
   async function getBooks() {
     return fetch("{% url 'appmain:get_books' %}").then((res) => res.json())
   }
@@ -75,7 +81,11 @@
     document.getElementById("book_table").innerHTML = ""
     const books = await getBooks()
     let htmlString = ``
+    var i=0
+    console.log(buttonId)
     books.forEach((item) => {
+      i++
+      var buttonId = 'button' + i;
       if(item.pk%10==0){
         htmlString += `<div class="card-deck d-flex justify-content-center">`
       }
@@ -85,7 +95,7 @@
                 <h5 class="card-title">${item.fields.Title}</h5>
                   <p class="card-text">${item.fields.Author}</p>
                     <a href="${item.fields.Link}" class="btn btn-primary">Link</a>
-                    <button class="btn btn-primary"data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="checkLogin(event)">Favorite It
+                    <button id="${buttonId}" data-my-variable="${item.fields.Title}" class="btn btn-primary" onclick="handleButtonClick(event);checkLogin(event)" data-bs-toggle="modal" data-bs-target="#exampleModal">Favorite It
                     <i class="fa fa-heart"></i>
                     </button>
               </div>
@@ -104,7 +114,10 @@
     const books = await getBooks()
     var data_filter = books.filter( element => element.fields.Title.includes(titleSearch))
     let htmlString = ``
+    var i=0
     data_filter.forEach((item) => {
+      i++
+      var buttonId = 'button' + i;
       if(item.pk%10==0){
         htmlString += `<div class="card-deck d-flex justify-content-center">`
       }
@@ -114,7 +127,7 @@
                 <h5 class="card-title">${item.fields.Title}</h5>
                   <p class="card-text">${item.fields.Author}</p>
                     <a href="${item.fields.Link}" class="btn btn-primary">Link</a>
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="checkLogin(event)">Favorite It
+                    <button id="${buttonId}" data-my-variable="${item.fields.Title}" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="handleButtonClick(event);checkLogin(event)">Favorite It
                     <i class="fa fa-heart"></i>
                     </button>
               </div>
@@ -141,12 +154,24 @@
   document.getElementById("search").onclick = refreshBooksFilter
   document.getElementById("button_add").onclick = addFavorite
 
+  
+
   function checkLogin(event) {
-        if (!{{ request.session.user_logged_in|default:"false" }}) {
-            event.preventDefault(); // Menghentikan navigasi saat tautan diklik
+        if (!{{ request.session.user_logged_in|default:"false" }}) {// Menghentikan navigasi saat tautan diklik
             $('#loginModal').modal('show');
-        }
+            return false
+        } 
   }
+
+  $(document).ready(function () {
+        $('#exampleModal').on('show.bs.modal', function (e) {
+            var element = document.getElementById(buttonId);
+            console.log(buttonId)
+            var myVariable = element.getAttribute('data-my-variable');
+            document.getElementById('inputTitle').value=myVariable;
+            $('#idTitle').text("Title");
+        });
+    });
   
 
   

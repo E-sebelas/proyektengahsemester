@@ -73,7 +73,7 @@ def login_user(request):
 
 def logout_user(request):
     logout(request)
-    response = HttpResponseRedirect(reverse('login'))
+    response = HttpResponseRedirect(reverse('appmain:login'))
     return response
 
 def get_books(request):
