@@ -3,181 +3,34 @@
 
 {% block content %}
 {% include 'navigationbar.html' %}
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalLabel">Favorite A Book?</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-              <form id="form" onsubmit="return false;">
-                  {% csrf_token %}
-                  <div class="mb-3">
-                      <label id="idTitle" for="title" class="col-form-label">Title:</label>
-                      <input id="inputTitle" type="text" class="form-control" id="idTitle" name="Title" value="Title"></input>
-                  </div>
-              </form>
-          </div>
-          <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal" >Favorite It</button>
-          </div>
+  <div class="container">
+    <h1 style="color: #609966; font-family: 'Glorifydemo-BW3J3', sans-serif; padding-top: 20px;">What book do you want to read today?</h1>
+      <!-- Search bar menggunakan Bootstrap -->
+      <div class="input-group mt-3">
+        <input type="text" class="form-control" placeholder="Cari buku..." style="background-color: #EDF1D6; color: #40513B;">
+        <div class="input-group-append">
+          <button class="btn btn-primary" type="button" style="background-color: #9DC08B; border: 1px solid #40513B;">Cari</button>
+        </div>
       </div>
-  </div>
-</div>
-<style>
-  .card {
-    background-color: '#609966';
-    color: '#609966';
-  }
+  
+    <h2 style="color: #40513B; font-family: 'Glorifydemo-BW3J3', sans-serif;">Sub Judul</h2>
 
-  .card-title {
-    font-family: 'Glorifydemo-BW3J3', sans-serif
-  }
 
-  .btn-primary {
-    background-color: #9DC08B;
-    color: #EDF1D6;
-    border: 2px solid #40513B;
-    border-radius: 5px;
-    font-family: 'Glorifydemo-BW3J3', sans-serif
-  }
+    <div class="row">
+      <div class="col-md-6">
+        <p style="color: #609966;">Ini adalah teks dalam kolom pertama.</p>
+      </div>
+      <div class="col-md-6">
+        <p style="color: #609966;">Ini adalah teks dalam kolom kedua.</p>
+      </div>
+    </div>
 
-  /* Styling saat tombol login dihover */
-  .btn-primary:hover {
-    background-color: #40513B;
-    color: #EDF1D6;
-  }
-</style>
+    <button class="btn btn-primary" type="button" style="background-color: #609966;">Tombol Primer</button>
+    <button class="btn btn-secondary" type="button" style="background-color: #40513B;">Tombol Sekunder</button>
 
-<div class="container">
-  <h1 style="color: #609966; font-family: 'Glorifydemo-BW3J3', sans-serif; padding-top: 20px;">What book do you want to
-    read today?</h1>
-  <!-- Search bar menggunakan Bootstrap -->
-  <div class="input-group mt-3">
-    <input type="text" class="form-control" placeholder="Cari buku..."
-      id="s_title" style="background-color: #EDF1D6; color: #40513B;">
-    <div class="input-group-append">
-      <button class="btn btn-primary" type="button" id="search"
-        style="background-color: #9DC08B; border: 1px solid #40513B;">Cari</button>
+    <div class="alert alert-success mt-3" role="alert" style="background-color: #9DC08B; color: #EDF1D6;">
+      Ini adalah pesan sukses.
     </div>
   </div>
-  <div id="aie"></div>
-  <div id="book_table"></div>
-  <button type="button" class="btn btn-primary" id="mutton">Show All Books</button>
-</div>
-
-<script>
-  var buttonId="button1"
-  async function getBooks() {
-    return fetch("{% url 'appmain:get_books' %}").then((res) => res.json())
-  }
-  async function refreshBooks() {
-    document.getElementById("book_table").innerHTML = ""
-    const books = await getBooks()
-    let htmlString = ``
-    var i=0
-    console.log(buttonId)
-    books.forEach((item) => {
-      i++
-      var buttonId = 'button' + i;
-      if(item.pk%10==0){
-        htmlString += `<div class="card-deck d-flex">`
-      }
-      htmlString += `
-            <div class="card" style="width: 18rem;">
-              <div class="card-body">
-                <h5 class="card-title">${item.fields.Title}</h5>
-                  <p class="card-text">${item.fields.Author}</p>
-                    <a href="${item.fields.Link}" class="btn btn-primary">Link</a>
-                    <button id="${buttonId}" data-my-variable="${item.fields.Title}" class="btn btn-primary" onclick="checkLogin(event)" data-bs-toggle="modal" data-bs-target="#exampleModal">Favorite It
-                    <i class="fa fa-heart"></i>
-                    </button>
-              </div>
-            </div>`
-      if(item.pk%5==0){
-        htmlString += `
-      </div><br>`
-      }
-    })
-
-    document.getElementById("book_table").innerHTML = htmlString
-  }
-  async function refreshBooksFilter() {
-    document.getElementById("book_table").innerHTML = ""
-    var titleSearch = $("#s_title").val()
-    const books = await getBooks()
-    var data_filter = books.filter( element => element.fields.Title.toLowerCase().includes(titleSearch))
-    let htmlString = ``
-    var i=0
-    data_filter.forEach((item) => {
-      i++
-      var buttonId = 'button' + i;
-      if(item.pk%10==0){
-        htmlString += `<div class="card-deck d-flex">`
-      }
-      htmlString += `
-            <div class="card" style="width: 18rem;">
-              <div class="card-body">
-                <h5 class="card-title">${item.fields.Title}</h5>
-                  <p class="card-text">${item.fields.Author}</p>
-                    <a href="${item.fields.Link}" class="btn btn-primary">Link</a>
-                    <button id="${buttonId}" data-my-variable="${item.fields.Title}" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="checkLogin(event)">Favorite It
-                    <i class="fa fa-heart"></i>
-                    </button>
-              </div>
-            </div>`
-      if(item.pk%5==0){
-        htmlString += `
-      </div><br>`
-      }
-    })
-
-    document.getElementById("book_table").innerHTML = htmlString
-  }
-  function addFavorite() {
-        fetch("{% url 'appmain:favorite' %}", {
-            method: "POST",
-            body: new FormData(document.querySelector('#form'))
-        }).then(refreshBooks)
-
-        document.getElementById("form").reset()
-        return false
-    }
-
-  document.getElementById("mutton").onclick = refreshBooks
-  refreshBooks()
-  document.getElementById("search").onclick = refreshBooksFilter
-  document.getElementById("button_add").onclick = addFavorite
-
-  
-
-  function checkLogin(event) {
-        if (!{{ request.session.user_logged_in|default:"false" }}) {// Menghentikan navigasi saat tautan diklik
-            $('#loginModal').modal('show');
-            return false
-        } 
-  }
-  $(document).on('click', 'button', function() {
-            var clickedButton = $(this);
-            buttonId=clickedButton.attr('id');
-            
-        });
-
-  $(document).ready(function () {
-        $('#exampleModal').on('show.bs.modal', function (e) {
-            var element = document.getElementById(buttonId);
-            console.log(buttonId)
-            var myVariable = element.getAttribute('data-my-variable');
-            document.getElementById('inputTitle').value=myVariable;
-            $('#idTitle').text("Title");
-        });
-    });
-  
-
-  
-
-
-</script>
 {% endblock content %}
+

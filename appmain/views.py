@@ -9,14 +9,13 @@ from django.http import HttpResponseRedirect
 from appmain.models import Book
 from django.http import HttpResponse
 from django.core import serializers
-from appmain.models import Book, Favorite
+from appmain.models import Book
 from django.http import HttpResponse
 from django.core import serializers
-from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import get_object_or_404
-from django.http import JsonResponse
-
-
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.views.generic import ListView
+   
+from appmain.models import Post
 
 def show_main(request):
     # Fungsi ini akan merender halaman main.html dan mengembalikannya sebagai respons.
@@ -50,7 +49,7 @@ def user_register(request):
         if form.is_valid():
             # Proses pendaftaran pengguna di sini
             form.save()
-            return redirect('appmain:login')  # Ganti dengan halaman dashboard pengguna
+            return redirect('login')  # Ganti dengan halaman dashboard pengguna
     else:
         form = UserCreationForm()
     return render(request, 'registration_user.html', {'form': form})
@@ -65,7 +64,7 @@ def login_user(request):
             request.session['user_logged_in'] = True
             request.session['username'] = user.username
             request.session['is_admin'] = user.is_staff  # Sesuaikan sesuai logika Anda
-            return redirect('appmain:show_main')
+            return redirect('show_main')
         else:
             messages.info(request, 'Sorry, incorrect username or password. Please try again.')
     context = {}
@@ -73,7 +72,7 @@ def login_user(request):
 
 def logout_user(request):
     logout(request)
-    response = HttpResponseRedirect(reverse('appmain:login'))
+    response = HttpResponseRedirect(reverse('login'))
     return response
 
 def get_books(request):
@@ -81,33 +80,78 @@ def get_books(request):
     return HttpResponse(serializers.serialize("json",data),
     content_type="application/json")
 
-def get_books_json(request):
-    data=Book.objects.all()
-    return HttpResponse(serializers.serialize("json",data))
+from django.shortcuts import render
 
 def admin_menu(request):
     # Tambahkan logika yang diperlukan untuk halaman admin menu di sini
     return render(request, 'admin_menu.html')
 
-def show_favorite(request):
-    # Fungsi ini akan merender halaman main.html dan mengembalikannya sebagai respons.
-    return render(request, 'favorites.html')
 
-@csrf_exempt
-def favorite(request):
+def forum(request):
+    context = {
+        'posts': Post.objects.all()
+    }
+    return render(request, 'forum.html', context)
+
+
+
+def create(request):
     if request.method == 'POST':
-        Title = request.POST.get("Title")
-        user = request.user
+        title = request.POST.get('title')
+        content = request.POST.get('content')
+        book_name = request.POST.get('book_name')
+        rating = request.POST.get('rating')
+        author = request.POST.get('author')
+        
+        
+        new_post = Post(title=title, content=content, book_name=book_name, rating=rating, author=author)
+        new_post.save()
+        success = 'Post created successfully'
+        return HttpResponse(success)
+        
 
-        new_product = Favorite(user=user, Title=Title)
-        new_product.save()
+    
+"""
+class PostDetailView(DetailView):
+    model = Post
 
-        return HttpResponse(b"CREATED", status=201)
 
-    return HttpResponseNotFound()
+class PostCreateView(LoginRequiredMixin, CreateView):
+    model = Post
+    fields = ['title', 'content']
 
-def get_favorites(request):
-    favorites = Favorite.objects.filter(user=request.user)
-    return HttpResponse(serializers.serialize('json', favorites))
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
 
+
+class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Post
+    fields = ['title', 'content']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.author:
+            return True
+        return False
+
+
+class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Post
+    success_url = '/'
+
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.author:
+            return True
+        return False"""
+
+
+def forum_about(request):
+    return render(request, 'forum_about.html', {'title': 'About'})
+    
 # Create your views here.
