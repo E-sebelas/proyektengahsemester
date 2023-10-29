@@ -6,6 +6,15 @@ from django.urls import reverse
 from django.contrib.auth.forms import UserCreationForm
 from .forms import AdminRegistrationForm
 from django.http import HttpResponseRedirect
+from appmain.models import Book
+from django.http import HttpResponse
+from django.core import serializers
+from appmain.models import Book, Favorite
+from django.http import HttpResponse
+from django.core import serializers
+from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
 
 
 
@@ -41,7 +50,7 @@ def user_register(request):
         if form.is_valid():
             # Proses pendaftaran pengguna di sini
             form.save()
-            return redirect('login')  # Ganti dengan halaman dashboard pengguna
+            return redirect('appmain:login')  # Ganti dengan halaman dashboard pengguna
     else:
         form = UserCreationForm()
     return render(request, 'registration_user.html', {'form': form})
@@ -56,7 +65,7 @@ def login_user(request):
             request.session['user_logged_in'] = True
             request.session['username'] = user.username
             request.session['is_admin'] = user.is_staff  # Sesuaikan sesuai logika Anda
-            return redirect('show_main')
+            return redirect('appmain:show_main')
         else:
             messages.info(request, 'Sorry, incorrect username or password. Please try again.')
     context = {}
@@ -64,11 +73,41 @@ def login_user(request):
 
 def logout_user(request):
     logout(request)
-    response = HttpResponseRedirect(reverse('login'))
+    response = HttpResponseRedirect(reverse('appmain:login'))
     return response
 
-from django.shortcuts import render
+def get_books(request):
+    data=Book.objects.all()
+    return HttpResponse(serializers.serialize("json",data),
+    content_type="application/json")
+
+def get_books_json(request):
+    data=Book.objects.all()
+    return HttpResponse(serializers.serialize("json",data))
 
 def admin_menu(request):
     # Tambahkan logika yang diperlukan untuk halaman admin menu di sini
     return render(request, 'admin_menu.html')
+
+def show_favorite(request):
+    # Fungsi ini akan merender halaman main.html dan mengembalikannya sebagai respons.
+    return render(request, 'favorites.html')
+
+@csrf_exempt
+def favorite(request):
+    if request.method == 'POST':
+        Title = request.POST.get("Title")
+        user = request.user
+
+        new_product = Favorite(user=user, Title=Title)
+        new_product.save()
+
+        return HttpResponse(b"CREATED", status=201)
+
+    return HttpResponseNotFound()
+
+def get_favorites(request):
+    favorites = Favorite.objects.filter(user=request.user)
+    return HttpResponse(serializers.serialize('json', favorites))
+
+# Create your views here.
