@@ -3,34 +3,134 @@
 
 {% block content %}
 {% include 'navigationbar.html' %}
-  <div class="container">
-    <h1 style="color: #609966; font-family: 'Glorifydemo-BW3J3', sans-serif; padding-top: 20px;">What book do you want to read today?</h1>
-      <!-- Search bar menggunakan Bootstrap -->
-      <div class="input-group mt-3">
-        <input type="text" class="form-control" placeholder="Cari buku..." style="background-color: #EDF1D6; color: #40513B;">
-        <div class="input-group-append">
-          <button class="btn btn-primary" type="button" style="background-color: #9DC08B; border: 1px solid #40513B;">Cari</button>
-        </div>
-      </div>
-  
-    <h2 style="color: #40513B; font-family: 'Glorifydemo-BW3J3', sans-serif;">Sub Judul</h2>
+<style>
+  .card {
+    background-color: '#609966';
+  }
 
+  .card-title {
+    font-family: 'Glorifydemo-BW3J3', sans-serif
+  }
 
-    <div class="row">
-      <div class="col-md-6">
-        <p style="color: #609966;">Ini adalah teks dalam kolom pertama.</p>
-      </div>
-      <div class="col-md-6">
-        <p style="color: #609966;">Ini adalah teks dalam kolom kedua.</p>
-      </div>
-    </div>
+  .btn-primary {
+    background-color: #9DC08B;
+    color: #EDF1D6;
+    border: 2px solid #40513B;
+    border-radius: 5px;
+    font-family: 'Glorifydemo-BW3J3', sans-serif
+  }
 
-    <button class="btn btn-primary" type="button" style="background-color: #609966;">Tombol Primer</button>
-    <button class="btn btn-secondary" type="button" style="background-color: #40513B;">Tombol Sekunder</button>
+  /* Styling saat tombol login dihover */
+  .btn-primary:hover {
+    background-color: #40513B;
+    color: #EDF1D6;
+  }
+</style>
 
-    <div class="alert alert-success mt-3" role="alert" style="background-color: #9DC08B; color: #EDF1D6;">
-      Ini adalah pesan sukses.
+<div class="container">
+  <h1 style="color: #609966; font-family: 'Glorifydemo-BW3J3', sans-serif; padding-top: 20px;">What book do you want to
+    read today?</h1>
+  <!-- Search bar menggunakan Bootstrap -->
+  <div class="input-group mt-3">
+    <input type="text" class="form-control" placeholder="Cari buku..."
+      id="s_title" style="background-color: #EDF1D6; color: #40513B;">
+    <div class="input-group-append">
+      <button class="btn btn-primary" type="button" id="search"
+        style="background-color: #9DC08B; border: 1px solid #40513B;">Cari</button>
     </div>
   </div>
-{% endblock content %}
+  <div id="aie"></div>
+  <div id="book_table"></div>
+  <button type="button" class="btn btn-primary" id="mutton">Show All Books</button>
+</div>
 
+<script>
+  async function getBooks() {
+    return fetch("{% url 'appmain:get_books' %}").then((res) => res.json())
+  }
+  async function refreshBooks() {
+    document.getElementById("book_table").innerHTML = ""
+    const books = await getBooks()
+    let htmlString = ``
+    books.forEach((item) => {
+      if(item.pk%10==0){
+        htmlString += `<div class="card-deck d-flex justify-content-center">`
+      }
+      htmlString += `
+            <div class="card" style="width: 18rem;">
+              <div class="card-body">
+                <h5 class="card-title">${item.fields.Title}</h5>
+                  <p class="card-text">${item.fields.Author}</p>
+                    <a href="${item.fields.Link}" class="btn btn-primary">Link</a>
+                    <a href="#" class="btn btn-primary" onclick=checkLogin(event)>Favorite It</a>
+              </div>
+            </div>`
+      if(item.pk%5==0){
+        htmlString += `
+      </div><br>`
+      }
+    })
+
+    document.getElementById("book_table").innerHTML = htmlString
+  }
+  async function refreshBooksFilter() {
+    document.getElementById("book_table").innerHTML = ""
+    var titleSearch = $("#s_title").val()
+    const books = await getBooks()
+    var data_filter = books.filter( element => element.fields.Title.includes(titleSearch))
+    let htmlString = ``
+    data_filter.forEach((item) => {
+      if(item.pk%10==0){
+        htmlString += `<div class="card-deck d-flex justify-content-center">`
+      }
+      htmlString += `
+            <div class="card" style="width: 18rem;">
+              <div class="card-body">
+                <h5 class="card-title">${item.fields.Title}</h5>
+                  <p class="card-text">${item.fields.Author}</p>
+                    <a href="${item.fields.Link}" class="btn btn-primary">Link</a>
+                    <form class="bookmark_form" method="POST" action="{% url 'appmain:favorite' 'kwargs={ 'key':${item.pk} }' %}">
+                      {% csrf_token %}
+                    <input type="hidden" name="bookmarked" value="{{ "${item.pk}" }}" />
+                    <a class="btn btn-primary" onclick=checkLogin(event) method="POST">Favorite It
+                    <i class="fa fa-bookmark"></i>
+                    </a>
+                    </form>
+                    
+              </div>
+            </div>`
+      if(item.pk%5==0){
+        htmlString += `
+      </div><br>`
+      }
+    })
+
+    document.getElementById("book_table").innerHTML = htmlString
+  }
+  document.getElementById("mutton").onclick = refreshBooks
+  document.getElementById("search").onclick = refreshBooksFilter
+  
+  $(document).ready(function(){
+	    $('.data').load("data.php");
+	    $("#search").click(function(){
+	    	var title = $("#s_title").val();
+	    	$.ajax({
+	            type: 'POST',
+	            url: "data.php",
+	            data: {jurusan: jurusan},
+	            success: function(hasil) {
+	                $('.data').html(hasil);
+	            }
+	        });
+	    });
+	});
+  function checkLogin(event) {
+        if (!{{ request.session.user_logged_in|default:"false" }}) {
+            event.preventDefault(); // Menghentikan navigasi saat tautan diklik
+            $('#loginModal').modal('show');
+        }
+  }
+
+
+</script>
+{% endblock content %}
