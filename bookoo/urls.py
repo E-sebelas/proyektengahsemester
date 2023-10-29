@@ -15,27 +15,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
-from django.conf import settings
-from django.conf.urls.static import static
-from appmain.views import create
+from django.urls import include, path
 
-
-
-
-appname="appmain"
+app_name="appmain"
 
 urlpatterns = [
     path('', include('appmain.urls')),
     path('admin/', admin.site.urls),
-    path('api/appmain/',include("appmain.urls")),
-    path('', include('forum.urls')),
-    
+    path('/main/', include('appmain.urls')),  # Tambahkan baris ini untuk mengimpor URL dari aplikasi 'appmain'
+    path('', include('bookrequest.urls')),
+    path('', include('forums.urls')),
 
-    
-    
+
+    path('api/appmain/',include("appmain.urls")),
 
 ]
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content%}
+{% include 'navigationbar.html' %}
+<link rel="stylesheet" type="text/css" href='static\css\bookreqstyle.css'>
+<h1 style="font-family: 'Glorifydemo-BW3J3'; color: #609966; position: relative; justify-content: center; align-items: center; display: flex;">Request a Book</h1>
+<h3 style="font-family: 'Glorifydemo-BW3J3'; color: #40513B; position: relative; justify-content: center; align-items: center; display: flex;">Give us suggestions for what books to add in our library!</h3>
+<div class="reqcontainer" style="justify-content: center;">
+    <div class="left-content" style="height: 50vh;">
+        <h4 style="font-family: 'Glorifydemo-BW3J3'; color: #40513B; font-weight: 600;">Your previous requests</h4>
+        <table id="req_table" class="styled-table" style="font-family: 'Glorifydemo-BW3J3'; font-weight: lighter; margin-left: auto;margin-right: auto;"></table>
+        <button type="button" class="btn btn-primary custom-button" data-bs-toggle="modal" data-bs-target="#exampleModal" style="font-family: 'Glorifydemo-BW3J3';">Make New Request</button>
+    </div>
+
+</div>
+
+<div class="modal fade" style="font-family: 'Glorifydemo-BW3J3';" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div style="background-color: #EDF1D6;" class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Request a Book</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="form" onsubmit="return false;">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="title" class="col-form-label">Title:</label>
+                        <input type="text" class="form-control" id="title" name="title"></input>
+                    </div>
+                    <div class="mb-3">
+                        <label for="author" class="col-form-label">Author:</label>
+                        <input type="text" class="form-control" id="author" name="author"></input>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="col-form-label">Publish Year:</label>
+                        <input type="number" class="form-control" id="published" name="published">
+                    </div>
+                </form>
+            </div>
+            <div style="background-color: #EDF1D6;" class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" style="background-color: #40513B;" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Request</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    async function getReqs() {
+        return fetch("{% url 'bookrequest:get_product_json' %}").then((res) => res.json())
+    }
+
+    async function refreshProducts() {
+        document.getElementById("req_table").innerHTML = ""
+        const products = await getReqs()
+        let htmlString = `<tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Year</th>
+        </tr>`
+        products.forEach((item) => {
+            htmlString += `\n<tr>
+            <td>${item.fields.title}</td>
+            <td>${item.fields.author}</td>
+            <td>${item.fields.published}</td>
+        </tr>` 
+        })
+        
+        document.getElementById("req_table").innerHTML = htmlString
+    }
+
+    refreshProducts()
+
+    function addProduct() {
+        fetch("{% url 'bookrequest:add_product_ajax' %}", {
+            method: "POST",
+            body: new FormData(document.querySelector('#form'))
+        }).then(refreshProducts)
+
+        document.getElementById("form-post").reset()
+        return false
+    }
+    document.getElementById("button_add").onclick = addProduct
+
+</script>
+
+
+{% endblock content%}
