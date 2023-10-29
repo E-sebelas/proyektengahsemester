@@ -89,9 +89,9 @@
                 <h5 class="card-title">${item.fields.Title}</h5>
                   <p class="card-text">${item.fields.Author}</p>
                     <a href="${item.fields.Link}" class="btn btn-primary">Link</a>
-                    <form class="bookmark_form" method="POST" action="{% url 'appmain:favorite' '${item.pk}' %}">
+                    <form class="bookmark_form" method="POST">
                       {% csrf_token %}
-                    <input type="hidden" name="bookmarked" value="{{ '${item.pk}'}}" />
+                    <input type="hidden" name="bookmarked" />
                     <a class="btn btn-primary" onclick=checkLogin(event) method="POST">Favorite It
                     <i class="fa fa-bookmark"></i>
                     </a>
