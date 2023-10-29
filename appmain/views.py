@@ -89,17 +89,18 @@ def admin_menu(request):
     # Tambahkan logika yang diperlukan untuk halaman admin menu di sini
     return render(request, 'admin_menu.html')
 
+
 @csrf_exempt
-def favorite(request, key):
-    book = get_object_or_404(Book, pk=key)
+def favorite(request):
     if request.method == 'POST':
+        Title = request.POST.get("Title")
         user = request.user
-        try:
-            existing_favorite = Favorite.objects.get(user=user, book=book)
-            existing_favorite.delete()
-            return JsonResponse({'status': 'unbookmarked'})
-        except Favorite.DoesNotExist:
-            new_favorite = Favorite(user=user, book=book)
-            new_favorite.save()
-            return JsonResponse({'status': 'bookmarked'})
+
+        new_product = Favorite(Title=Title, user=user)
+        new_product.save()
+
+        return HttpResponse(b"CREATED", status=201)
+
+    return HttpResponseNotFound()
+
 # Create your views here.

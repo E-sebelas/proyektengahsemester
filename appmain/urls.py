@@ -15,6 +15,6 @@ urlpatterns = [
     path('adminmenu/', views.admin_menu, name='admin_menu'),
     path("get_books/",get_books, name="get_books"),
     path("get_books_json/",get_books_json, name="get_books_json"),
-    path('favorite/<int:pk>/', favorite, name='favorite')
+    path('favorite/', favorite, name='favorite')
     # Tambahkan URL lainnya sesuai kebutuhan
 ]
