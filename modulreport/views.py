@@ -104,6 +104,11 @@ def response_view(request, report_id):
         # Update laporan_list
         laporan_list = Report.objects.all()
 
+        # Include the 'username' in the response
+        user_info = {
+            'username': report.user.username
+        }
+
         # Return the updated data as JSON response
         return JsonResponse({'success': True, 'report': {
             'id': report.id,
@@ -113,8 +118,10 @@ def response_view(request, report_id):
             'other_issue': report.other_issue,
             'description': response_text,
             'date_added': formatted_date,
+            'user': user_info  # Include user information
         }})
 
     except Exception as e:
         return JsonResponse({'success': False, 'message': str(e)})
+
 

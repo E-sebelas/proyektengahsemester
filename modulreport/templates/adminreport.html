@@ -51,9 +51,9 @@
                 <th>Aksi</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="laporanList">
             {% for laporan in laporan_list %}
-            <tr>
+            <tr class="report-row" data-id="{{ laporan.id }}">
                 <td>{{ laporan.user.username }}</td>
                 <td>{{ laporan.status }}</td>
                 <td>{{ laporan.book_title }}</td>
@@ -209,18 +209,19 @@
             success: function (data) {
                 console.log('Success function called');
                 console.log(data);
-                console.log(reportId)
+                console.log(reportId);
+
                 if (data.success) {
                     $('#responseModal').modal('hide');
 
-                    // Update the table cell values here
-                    var tableRow = $(`.table tbody tr[data-id="${reportId}"]`);
-                    tableRow.find('td:nth-child(2)').text(data.report.status);  // Update the status
-                    tableRow.find('td:nth-child(6)').text(data.report.response_text);  // Update the description
+                    // Update the table cell values directly
+                    var tableRow = $(`.report-row[data-id="${reportId}"]`);
+                    console.log(tableRow[0]); // This will log the HTML element
 
-                    // Update the data-id attribute
-                    tableRow.attr('data-id', data.report.id);
-                    tableRow.hide().show(0);
+                    tableRow.find('td:nth-child(2)').text(status);  // Update the status
+                    tableRow.find('td:nth-child(6)').text(responseText);  // Update the description
+
+                    $("#responseForm")[0].reset();
                 }
             },
             error: function (error) {
@@ -230,7 +231,6 @@
             }
         });
     });
-
 
 
 </script>
