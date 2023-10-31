@@ -29,6 +29,28 @@
                 max-width: 200px; /* Atur sesuai kebutuhan Anda */
             }
         }
+
+        h1 {
+            color: #609966;
+            font-family: 'Glorifydemo-BW3J3', sans-serif;
+        }
+
+        .btn-primary {
+            background-color: #609966;
+        }
+
+        .btn-primary:hover {
+            background-color: #40513B;
+        }
+
+        .btn-danger {
+            background-color: #9DC08B;
+        }
+
+        .btn-danger:hover {
+            background-color: #40513B;
+        }
+
     </style>
 
     <div class="container">
@@ -40,6 +62,7 @@
             </div>
         </div>
         <div id="noReportsMessage" style="display: none;">Daftar Laporan Kosong.</div>
+        <a class="btn btn-primary" style="background-color: #609966;" id="tombolBuatLaporan">Buat Laporan</a>
 
         <div class="table-responsive" id="tableContainer">
             <table class="table table-striped">
@@ -83,7 +106,6 @@
         </div>
     </div>
 
-    <a class="btn btn-primary" style="background-color: #609966;" id="tombolBuatLaporan">Buat Laporan</a>
     <div id="modalLaporan" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -170,7 +192,12 @@
                     }
                 });
             });
-
+            
+            $("#closeButton").click(function() {
+                $("#modalLaporan").modal('hide'); // Tutup modal
+                $("#formLaporan")[0].reset(); // Setel ulang formulir
+            });
+    
             // Ketika nilai dropdown berubah
             $("#issue_type").change(function () {
                 var otherIssueGroup = $("#otherIssueGroup");

@@ -14,20 +14,68 @@
         text-overflow: ellipsis;
     }
 
-    /* Mengatur lebar maksimum sesuai kebutuhan Anda */
     @media (max-width: 767px) {
         .table th,
         .table td {
-            max-width: 100px; /* Atur sesuai kebutuhan Anda */
+            max-width: 100px; 
         }
     }
 
     @media (min-width: 768px) {
         .table th,
         .table td {
-            max-width: 200px; /* Atur sesuai kebutuhan Anda */
+            max-width: 200px; 
         }
     }
+
+    body {
+        background-color: #EDF1D6;
+    }
+
+    h1 {
+        color: #609966;
+        font-family: 'Glorifydemo-BW3J3', sans-serif;
+    }
+
+    .container {
+        background-color: #EDF1D6;
+    }
+
+    .input-group {
+        margin: 10px 0;
+    }
+
+    .input-group .form-control {
+        background-color: #EDF1D6;
+    }
+
+    .btn-primary {
+        background-color: #9DC08B;
+        color: #EDF1D6;
+        border: 2px solid #40513B;
+        border-radius: 5px;
+        font-family: 'Glorifydemo-BW3J3', sans-serif;
+    }
+
+    /* Styling saat tombol login dihover */
+    .btn-primary:hover {
+        background-color: #40513B;
+        color: #EDF1D6;    
+    }
+
+    .btn-custom {
+        background-color: #609966; 
+        color: #fff; 
+        border: 2px solid #40513B; 
+        font-family: 'Glorifydemo-BW3J3', sans-serif; 
+    }
+    
+    .btn-custom:hover {
+        background-color: #40513B; 
+        color: #fff; 
+
+    }
+
 </style>
 
 <div class="container">
@@ -66,19 +114,13 @@
                 <td>{{ laporan.description }}</td>
                 <td>{{ laporan.date_added|date:"M. d, Y" }}</td>
                 <td>
-                    <p>{{ laporan.id }}</p>
                     <button class="btn btn-primary response-button" data-id="{{ laporan.id }}">Response</button>
                 </td>
-            </tr>
-            {% empty %}
-            {# No reports available, display the message #}
-            <tr>
-                <td colspan="8">Daftar laporan kosong.</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
-    <a class="btn btn-back" href="javascript:history.back();">Back</a>
+    <a class="btn btn-back btn-custom" href="{% url 'admin_menu' %}">Back</a>
     <div class="modal" id="responseModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -90,7 +132,7 @@
                     <p>Status:
                         {% csrf_token %}
                         <select id="modalStatus" class="input-group">
-                            <option value="Review">Review</option>
+                            <option value="Review">Under Review</option>
                             <option value="Accepted">Accepted</option>
                             <option value="Rejected">Rejected</option>
                         </select>
@@ -117,22 +159,7 @@
         </div>
     </div>
 </div>
-
 <script>
-    //  var csrftoken = $.cookie('csrftoken');
-
-    // function csrfSafeMethod(method) {
-    //     // these HTTP methods do not require CSRF protection
-    //     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-    // }
-
-    // $.ajaxSetup({
-    //     beforeSend: function(xhr, settings) {
-    //         if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-    //             xhr.setRequestHeader("X-CSRFToken", csrftoken);
-    //         }
-    //     }
-    // })
     document.addEventListener('DOMContentLoaded', function () {
         var searchInput = document.getElementById('searchByTitle');
         var tableRows = document.querySelectorAll('.table tbody tr');
@@ -232,6 +259,17 @@
         });
     });
 
-
+    document.addEventListener('DOMContentLoaded', function () {
+        var laporanList = document.getElementById('laporanList');
+        var noReportsMessage = document.getElementById('noReportsMessage');
+    
+        // Periksa apakah daftar laporan kosong
+        if (laporanList.childElementCount === 0) {
+            noReportsMessage.style.display = 'block';
+        } else {
+            noReportsMessage.style.display = 'none';
+        }
+    });
+    
 </script>
 {% endblock content %}
