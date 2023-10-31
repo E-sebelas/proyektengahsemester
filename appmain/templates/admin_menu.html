@@ -71,7 +71,7 @@
     <a class="btn btn-primary" href="#">Modul Forum Discussion 👨🏾‍🤝‍👨🏻</a>
 
     <!-- Tombol untuk Modul Report -->
-    <a class="btn btn-primary" href="#">Modul Report 📝</a>
+    <a class="btn btn-primary" href="{% url 'admin_report' %}">Modul Report 📝</a>
 
     <!-- Tombol untuk Modul Request Buku -->
     <a class="btn btn-primary" href="#">Modul Request Buku 📖</a>
@@ -83,5 +83,5 @@
     <div class="spacer"></div>
 
     <!-- Tombol "Back" -->
-    <a class="btn btn-back" href="javascript:history.back();">Back</a>
+    <a class="btn btn-back" href="{% url 'show_main' %}">Back</a>
 {% endblock content %}

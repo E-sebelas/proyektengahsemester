@@ -1,0 +1,266 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+    <title>Report</title>
+{% endblock meta %}
+
+{% block content %}
+    {% include 'navigationbar.html' %}
+    <style>
+        .table th,
+        .table td {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Mengatur lebar maksimum sesuai kebutuhan Anda */
+        @media (max-width: 767px) {
+            .table th,
+            .table td {
+                max-width: 100px; /* Atur sesuai kebutuhan Anda */
+            }
+        }
+
+        @media (min-width: 768px) {
+            .table th,
+            .table td {
+                max-width: 200px; /* Atur sesuai kebutuhan Anda */
+            }
+        }
+
+        h1 {
+            color: #609966;
+            font-family: 'Glorifydemo-BW3J3', sans-serif;
+        }
+
+        .btn-primary {
+            background-color: #609966;
+        }
+
+        .btn-primary:hover {
+            background-color: #40513B;
+        }
+
+        .btn-danger {
+            background-color: #9DC08B;
+        }
+
+        .btn-danger:hover {
+            background-color: #40513B;
+        }
+
+    </style>
+
+    <div class="container">
+        <h1>Daftar Laporan</h1>
+        <div class="input-group mb-3">
+            <input type="text" id="searchByTitle" class="form-control" placeholder="Search by Judul Buku" />
+            <div class="input-group-append">
+                <button class="btn btn-primary" id="searchButton" type="button">Search</button>
+            </div>
+        </div>
+        <div id="noReportsMessage" style="display: none;">Daftar Laporan Kosong.</div>
+        <a class="btn btn-primary" style="background-color: #609966;" id="tombolBuatLaporan">Buat Laporan</a>
+
+        <div class="table-responsive" id="tableContainer">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Status</th>
+                        <th>Judul Buku</th>
+                        <th>Jenis Masalah</th>
+                        <th>Jenis Masalah Lainnya</th>
+                        <th>Deskripsi Masalah</th>
+                        <th>Tanggal</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="laporanList">
+                    {% for laporan in laporan_list %}
+                        <tr>
+                            <td>{{ laporan.status }}</td>
+                            <td>{{ laporan.book_title }}</td>
+                            <td>{{ laporan.issue_type }}</td>
+                            <td>
+                                {% if laporan.issue_type == "Masalah Lainnya" %}
+                                    {{ laporan.other_issue }}
+                                {% endif %}
+                            </td>
+                            <td>{{ laporan.description }}</td>
+                            <td>{{ laporan.date_added|date:"M. d, Y" }}</td>
+                            <td>
+                                <button class="btn btn-danger delete-button" data-id="{{ laporan.id }}">Delete</button>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        {# No reports available, display the message #}
+                        <script>
+                            document.getElementById("noReportsMessage").style.display = "block";
+                            document.getElementById("tableContainer").style.display = "none";
+                        </script>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="modalLaporan" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Buat Laporan Baru</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="formLaporan" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="book_title">Judul Buku</label>
+                            <input type="text" id="book_title" name="book_title" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="issue_type">Jenis Masalah</label>
+                            <div class="input-group">
+                                <select id="issue_type" name="issue_type" class="custom-select" required>
+                                    <option value="" disabled selected>Pilih Jenis Masalah</option>
+                                    <option value="Buku Rusak">Buku Rusak</option>
+                                    <option value="Informasi Hilang">Informasi Hilang</option>
+                                    <option value="Masalah Lainnya">Lainnya</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="otherIssueGroup" style="display: none;">
+                            <label for="other_issue">Jenis Masalah Lainnya (Opsional)</label>
+                            <textarea id="other_issue" name="other_issue" class="form-control"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for "description">Deskripsi Masalah</label>
+                            <textarea id="description" name="description" class="form-control" required></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="closeButton">Close</button>
+                    <button type="button" id="kirimLaporanBtn" class="btn btn-primary">Kirim Laporan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // Add click event for "Buat Laporan" button
+            $("#tombolBuatLaporan").click(function() {
+                $("#modalLaporan").modal('show'); // Use 'show' to display the modal
+            });
+
+            // Add click event for "Kirim Laporan" button
+            $("#kirimLaporanBtn").click(function() {
+                var issueType = $("#issue_type").val();
+                var otherIssue = $("#other_issue").val();
+
+                if (issueType === "Masalah Lainnya" && otherIssue.trim() === "") {
+                    alert("Isi Jenis Masalah Lainnya.");
+                    return;
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'simpan_laporan' %}",
+                    data: $("#formLaporan").serialize(),
+                    success: function(data) {
+                        // Close the modal on success
+                        $("#modalLaporan").modal('hide');
+                        $("#formLaporan")[0].reset();
+                        // Perbarui daftar laporan dengan laporan yang baru ditambahkan
+                        var laporanList = $("#laporanList");
+                        var newRow = $("<tr>");
+                        $("#tableContainer").show(); // Menampilkan tabel jika ada hasil yang ditemukan
+                        $("#noReportsMessage").hide();
+
+                        newRow.append($("<td>").text(data.report.status));
+                        newRow.append($("<td>").text(data.report.book_title));
+                        newRow.append($("<td>").text(data.report.issue_type));
+                        newRow.append($("<td>").text(data.report.other_issue));
+                        newRow.append($("<td>").text(data.report.description));
+                        newRow.append($("<td>").text(data.report.date_added));
+                        newRow.append($("<td>").html('<button class="btn btn-danger delete-button" data-id="' + data.report.id + '">Delete</button>'));
+
+                        laporanList.append(newRow);
+                    }
+                });
+            });
+            
+            $("#closeButton").click(function() {
+                $("#modalLaporan").modal('hide'); // Tutup modal
+                $("#formLaporan")[0].reset(); // Setel ulang formulir
+            });
+    
+            // Ketika nilai dropdown berubah
+            $("#issue_type").change(function () {
+                var otherIssueGroup = $("#otherIssueGroup");
+                if ($(this).val() === "Masalah Lainnya") {
+                    otherIssueGroup.show();
+                } else {
+                    otherIssueGroup.hide();
+                }
+            });
+
+            $("#searchByTitle").on("input", function() {
+                var searchTerm = $(this).val().toLowerCase();
+                var anyResults = false; // Tambahkan variabel untuk melacak apakah ada hasil yang ditemukan
+
+                $("#laporanList tr").each(function() {
+                    var title = $(this).find("td:eq(1)").text().toLowerCase();
+                    if (title.indexOf(searchTerm) === 0) {
+                        $(this).show();
+                        anyResults = true; // Setel variabel jika ada hasil yang ditemukan
+                    } else {
+                        $(this).hide();
+                    }
+                });
+
+                // Tampilkan atau sembunyikan pesan sesuai dengan apakah ada hasil yang ditemukan
+                if (anyResults) {
+                    $("#noReportsMessage").hide();
+                    $("#tableContainer").show(); // Menampilkan tabel jika ada hasil yang ditemukan
+                } else {
+                    $("#noReportsMessage").show();
+                    $("#tableContainer").hide(); // Menyembunyikan tabel jika tidak ada hasil yang ditemukan
+                }
+            });
+
+            // Menggunakan event delegation untuk tombol delete
+            // Menggunakan event delegation untuk tombol delete
+            $(document).on("click", ".delete-button", function() {
+                var row = $(this).closest("tr"); // Baris yang akan dihapus
+                var id = $(this).data("id"); // ID laporan yang akan dihapus
+
+                // Konfirmasi penghapusan
+                if (confirm("Apakah Anda yakin ingin menghapus laporan ini?")) {
+                    // Mengirim permintaan AJAX ke backend untuk menghapus laporan
+                    $.ajax({
+                        type: "POST",
+                        url: "/modulreport/hapuslaporan/" + id + "/",
+                        data: { id: id },
+                        success: function(data) {
+                            // Hapus baris dari tabel setelah penghapusan berhasil
+                            row.remove();
+                            if ($("#laporanList tr").length === 0) {
+                                $("#noReportsMessage").show();
+                                $("#tableContainer").hide(); // Menyembunyikan tabel jika tidak ada hasil yang ditemukan
+                            }
+                        },
+                        error: function() {
+                            alert("Gagal menghapus laporan. Silakan coba lagi.");
+                        }
+                    });
+                }
+            });
+
+
+        });
+    </script>
+{% endblock content %}
