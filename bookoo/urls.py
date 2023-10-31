@@ -26,7 +26,7 @@ app_name="appmain"
 urlpatterns = [
     path('', include('appmain.urls')),
     path('admin/', admin.site.urls),
-    path('modulreport/', include('modulreport.urls'))
+    path('modulreport/', include('modulreport.urls')),
     path('/main/', include('appmain.urls')),  # Tambahkan baris ini untuk mengimpor URL dari aplikasi 'appmain'
     path('bookrequest/', include('bookrequest.urls')),
     path('api/appmain/',include("appmain.urls")),
