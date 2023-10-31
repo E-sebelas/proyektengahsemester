@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'appmain',
     'modulreport',
+    'bookrequest',
 ]
 
 MIDDLEWARE = [

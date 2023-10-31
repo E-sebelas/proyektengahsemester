@@ -47,7 +47,7 @@
 
 <nav class="navbar navbar-expand-lg custom-navbar">
     <div class="container">
-        <a class="navbar-brand" href="{% url 'show_main' %}">BOOKOO</a>
+        <a class="navbar-brand" href="{% url 'appmain:show_main' %}">BOOKOO</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -60,7 +60,7 @@
                     <a class="nav-link" href="{% url 'report_book' %}" onclick="checkLogin(event)">Report Book</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" onclick="checkLogin(event)">Request Book</a>
+                    <a class="nav-link" href="{% url 'bookrequest:show_main' %}" onclick="checkLogin(event)">Request Book</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#" onclick="checkLogin(event)">Personal Journal</a>
@@ -79,16 +79,16 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="userDropdown">
                         <a class="dropdown-item" href="#">Account Info</a>
-                        <a class="dropdown-item" href="#">Favorite Book List</a>
+                        <a class="dropdown-item" href="{% url 'appmain:show_favorite' %}">Favorite Book List</a>
                         {% if request.session.is_admin %}
-                            <a class="dropdown-item" href="{% url 'admin_menu' %}">Admin Menu</a>
+                            <a class="dropdown-item" href="{% url 'appmain:admin_menu' %}">Admin Menu</a>
                         {% endif %}
-                        <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                        <a class="dropdown-item" href="{% url 'appmain:logout' %}">Logout</a>
                     </div>
                 </div>
             </div>
         {% else %}
-            <a class="btn login-button ml-auto" href="{% url 'login' %}">Login</a>
+            <a class="btn login-button ml-auto" href="{% url 'appmain:login' %}">Login</a>
         {% endif %}
     </div>
 </nav>
@@ -107,7 +107,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <a class="btn btn-primary" href="{% url 'login' %}">Login</a>
+                <a class="btn btn-primary" href="{% url 'appmain:login' %}">Login</a>
             </div>
         </div>
     </div>
@@ -115,7 +115,7 @@
 
 <script>
     function checkLogin(event) {
-        if (!{{ request.session.user_logged_in|default:"false" }}) {
+        if (!{{ request.session.user_logged_in| default:"false" }}) {
             event.preventDefault(); // Menghentikan navigasi saat tautan diklik
             $('#loginModal').modal('show');
         }

@@ -19,8 +19,15 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+from django.urls import include, path
+
+app_name="appmain"
+
 urlpatterns = [
+    path('', include('appmain.urls')),
     path('admin/', admin.site.urls),
-    path('', include('appmain.urls')),  # Tambahkan baris ini untuk mengimpor URL dari aplikasi 'appmain'
     path('modulreport/', include('modulreport.urls'))
+    path('/main/', include('appmain.urls')),  # Tambahkan baris ini untuk mengimpor URL dari aplikasi 'appmain'
+    path('bookrequest/', include('bookrequest.urls')),
+    path('api/appmain/',include("appmain.urls")),
 ]
