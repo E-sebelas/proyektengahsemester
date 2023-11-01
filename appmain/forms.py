@@ -12,3 +12,5 @@ class FavoritesForm(ModelForm):
         model = Favorite
         fields = ["Title"]
 
+
+

@@ -1,5 +1,5 @@
 from django.urls import path
-
+from bookrequest.views import show_bookrequest
 from . import views
 
 app_name = 'bookrequest'
@@ -12,5 +12,9 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('logout/', views.logout_user, name='logout'),
     path('get-product/', views.get_product_json, name='get_product_json'),
-    path('create-product-ajax/', views.add_reqs_ajax, name='add_product_ajax')
+    path('create-product-ajax/', views.add_reqs_ajax, name='add_product_ajax'),
+    path('show_bookrequest/', show_bookrequest, name='show_bookrequest')
+
+    
+
 ]

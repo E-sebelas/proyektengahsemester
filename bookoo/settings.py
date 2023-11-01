@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'appmain',
     'modulreport',
     'bookrequest',
+    'forums',
 ]
 
 MIDDLEWARE = [

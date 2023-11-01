@@ -54,13 +54,13 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#" onclick="checkLogin(event)">Forum Discussion</a>
+                    <a class="nav-link" href="{% url 'forums:show_forum' %}" onclick="checkLogin(event)">Forum Discussion</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'report_book' %}" onclick="checkLogin(event)">Report Book</a>
+                    <a class="nav-link" href="#" onclick="checkLogin(event)">Report Book</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'bookrequest:show_main' %}" onclick="checkLogin(event)">Request Book</a>
+                    <a class="nav-link" href="{% url 'bookrequest:show_bookrequest' %}" onclick="checkLogin(event)">Request Book</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#" onclick="checkLogin(event)">Personal Journal</a>

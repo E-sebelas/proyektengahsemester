@@ -11,22 +11,16 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 
-from bookrequest.forms import ReqForm
-from bookrequest.models import Reqbook
+from forums.forms import CreatePostForm
+from forums.models import Post
 
 
 @login_required(login_url='/login')
-def show_main(request):
-    requests = Reqbook.objects.filter(user=request.user)
-    context = {'name': request.user.username,
-               'requests': requests,
-               'last_login': request.COOKIES.get('last_login', 'Cookie Not Found'),
-    }
-    return render(request, 'bookreq-main.html', context)
 
 
-def get_reqs_json(request):
-    reqs_item = Reqbook.objects.all()
+
+def get_request_json(request):
+    reqs_item = Post.objects.all()
     return HttpResponse(serializers.serialize('json', reqs_item))
 
 def register(request):
@@ -48,7 +42,7 @@ def login_user(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            response = HttpResponseRedirect(reverse("bookrequest:show_main")) 
+            response = HttpResponseRedirect(reverse("post:show_main")) 
             response.set_cookie('last_login', str(datetime.datetime.now()))
             return response
         else:
@@ -58,29 +52,34 @@ def login_user(request):
 
 def logout_user(request):
     logout(request)
-    response = HttpResponseRedirect(reverse('bookrequest:login'))
+    response = HttpResponseRedirect(reverse('forum:login'))
     response.delete_cookie('last_login')
     return response
 
-def get_product_json(request):
-    req_item = Reqbook.objects.all()
+def get_post_json(request):
+    req_item = Post.objects.all()
     return HttpResponse(serializers.serialize('json', req_item))
 
 @csrf_exempt
-def add_reqs_ajax(request):
-    if request.method == "POST":
-        title = request.POST.get("title")
-        author = request.POST.get("author")
-        published = request.POST.get("published")
-        user = request.user
-        
-        new_request = Reqbook(title=title,author=author,published=published,user=user)
-        new_request.save()
+def add_request_ajax(request):
+    if request.method == 'POST':
+        form = CreatePostForm(request.POST)
+        if form.is_valid():
+            post =Post(
+                title=form.cleaned_data["title"],
+                content=form.cleaned_data["content"],
+                book_name=form.cleaned_data["book_name"],
+                rating=form.cleaned_data["rating"],
+                author=form.cleaned_data["author"],
+                
+            )
+            post.save()
 
         return HttpResponse(b"CREATED", status=201)
     return HttpResponseNotFound
 
-def show_bookrequest(request):
+    
+def show_forum(request):
     # Fungsi ini akan merender halaman main.html dan mengembalikannya sebagai respons.
-    return render(request, 'bookreq-main.html')
+    return render(request, 'forum.html')
 
