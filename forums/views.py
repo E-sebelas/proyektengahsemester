@@ -15,7 +15,6 @@ from forums.forms import CreatePostForm
 from forums.models import Post
 
 
-@login_required(login_url='/login')
 
 
 
@@ -78,7 +77,8 @@ def add_request_ajax(request):
         return HttpResponse(b"CREATED", status=201)
     return HttpResponseNotFound
 
-    
+
+@login_required    
 def show_forum(request):
     # Fungsi ini akan merender halaman main.html dan mengembalikannya sebagai respons.
     return render(request, 'forum.html')

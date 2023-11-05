@@ -54,13 +54,13 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'forums:show_forum' %}" onclick="checkLogin(event)">Forum Discussion</a>
+                    <a class="nav-link" onclick="checkLogin(event)" href="{% url 'forums:show_forum' %}">Forum Discussion</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" onclick="checkLogin(event)">Report Book</a>
+                    <a class="nav-link" onclick="checkLogin(event)" href="{% url 'report_book' %}">Report Book</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'bookrequest:show_bookrequest' %}" onclick="checkLogin(event)">Request Book</a>
+                    <a class="nav-link" onclick="checkLogin(event)" href="{% url 'bookrequest:show_bookrequest' %}">Request Book</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#" onclick="checkLogin(event)">Personal Journal</a>
@@ -120,4 +120,5 @@
             $('#loginModal').modal('show');
         }
     }
+    
 </script>

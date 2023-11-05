@@ -33,7 +33,8 @@ def admin_register(request):
                 user = form.save(commit=False)  # Tambahkan commit=False untuk menghindari penyimpanan langsung ke database
                 user.is_staff = True  # Menandai akun sebagai admin
                 user.save()  # Simpan akun dengan is_staff yang ditandai
-                return redirect('login')  # Ganti dengan halaman pemberitahuan bahwa pendaftaran berhasil
+                response = HttpResponseRedirect(reverse('appmain:login'))
+                return response
             else:
                 # Kode verifikasi tidak valid, tampilkan pesan kesalahan
                 form.add_error('admin_code', 'Kode verifikasi tidak valid.')
@@ -50,7 +51,8 @@ def user_register(request):
         if form.is_valid():
             # Proses pendaftaran pengguna di sini
             form.save()
-            return redirect('appmain:login')  # Ganti dengan halaman dashboard pengguna
+            response = HttpResponseRedirect(reverse('appmain:login'))
+            return response
     else:
         form = UserCreationForm()
     return render(request, 'registration_user.html', {'form': form})

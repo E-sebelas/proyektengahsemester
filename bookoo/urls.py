@@ -30,6 +30,7 @@ urlpatterns = [
     path('/main/', include('appmain.urls')),  # Tambahkan baris ini untuk mengimpor URL dari aplikasi 'appmain'
     path('bookrequest/', include('bookrequest.urls')),
     path('api/appmain/',include("appmain.urls")),
-   path('forums/', include('forums.urls')),
+    path('forums/', include('forums.urls')),
+    path('appmain/', include('appmain.urls'))
 
 ]

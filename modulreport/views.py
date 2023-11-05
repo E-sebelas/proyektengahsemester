@@ -14,12 +14,12 @@ from django.views.decorators.http import require_POST
 import json
 from .models import Response  # Import the Response model from your app's models
 
-
-
+@login_required
 def report_book(request):
     # Logika untuk halaman "Report Product" di sini
     laporan_list = Report.objects.filter(user=request.user)
     return render(request, 'mainreport.html', {'laporan_list': laporan_list})
+
 
 
 @csrf_exempt

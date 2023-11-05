@@ -15,7 +15,7 @@ from bookrequest.forms import ReqForm
 from bookrequest.models import Reqbook
 
 
-@login_required(login_url='/login')
+@login_required
 def show_main(request):
     requests = Reqbook.objects.filter(user=request.user)
     context = {'name': request.user.username,
