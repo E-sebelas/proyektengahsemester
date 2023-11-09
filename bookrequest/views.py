@@ -80,6 +80,7 @@ def add_reqs_ajax(request):
         return HttpResponse(b"CREATED", status=201)
     return HttpResponseNotFound
 
+@login_required
 def show_bookrequest(request):
     # Fungsi ini akan merender halaman main.html dan mengembalikannya sebagai respons.
     return render(request, 'bookreq-main.html')
