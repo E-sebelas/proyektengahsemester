@@ -1,0 +1,25 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+      - master
+      - master2
+
+jobs:
+  Deployment:
+    if: github.ref == 'refs/heads/master2' # Updated condition
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cloning repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Push to Dokku server
+        uses: dokku/github-action@master
+        with:
+          branch: 'master2' # Specify the branch to deploy
+          git_remote_url: ssh://dokku@${{ secrets.DOKKU_SERVER_IP }}/${{ secrets.DOKKU_APP_NAME }}
+          ssh_private_key: ${{ secrets.DOKKU_SSH_PRIVATE_KEY }}
