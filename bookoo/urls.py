@@ -31,6 +31,6 @@ urlpatterns = [
     path('bookrequest/', include('bookrequest.urls')),
     path('api/appmain/',include("appmain.urls")),
     path('forums/', include('forums.urls')),
-    path('appmain/', include('appmain.urls'))
-
+    path('appmain/', include('appmain.urls')),
+    path('auth/', include('authentication.urls')),
 ]
