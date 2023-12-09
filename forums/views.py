@@ -59,6 +59,10 @@ def get_post_json(request):
     req_item = Post.objects.all()
     return HttpResponse(serializers.serialize('json', req_item))
 
+def show_json(request):
+    data = Post.objects.all()
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
 @csrf_exempt
 def add_request_ajax(request):
     if request.method == 'POST':
