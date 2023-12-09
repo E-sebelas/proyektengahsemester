@@ -1,5 +1,4 @@
 import datetime
-import json
 
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -7,18 +6,13 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.core import serializers
 from django.http import (HttpResponse, HttpResponseNotFound,
-                         HttpResponseRedirect, JsonResponse)
+                         HttpResponseRedirect)
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 
 from forums.forms import CreatePostForm
 from forums.models import Post
-
-from django.views.decorators.http import require_POST
-from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse
-import json
 
 
 
@@ -70,23 +64,22 @@ def show_json(request):
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
 @csrf_exempt
-@require_POST
 def add_request_ajax(request):
-    try:
-        data = json.loads(request.body)
-        post = Post(
-            title=data["title"],
-            content=data["content"],
-            book_name=data["book_name"],
-            rating=data["rating"],
-            author=data["author"],
-        )
-        post.save()
-        return JsonResponse({"message": "Post created successfully"}, status=201)
-    except json.JSONDecodeError:
-        return JsonResponse({"error": "Invalid JSON"}, status=400)
-    except KeyError as e:
-        return JsonResponse({"error": f"Missing field: {e}"}, status=400)
+    if request.method == 'POST':
+        form = CreatePostForm(request.POST)
+        if form.is_valid():
+            post =Post(
+                title=form.cleaned_data["title"],
+                content=form.cleaned_data["content"],
+                book_name=form.cleaned_data["book_name"],
+                rating=form.cleaned_data["rating"],
+                author=form.cleaned_data["author"],
+                
+            )
+            post.save()
+
+        return HttpResponse(b"CREATED", status=201)
+    return HttpResponseNotFound
 
 
 @login_required    
