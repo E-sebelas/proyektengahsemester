@@ -1,4 +1,5 @@
 import datetime
+import json
 
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -6,13 +7,14 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.core import serializers
 from django.http import (HttpResponse, HttpResponseNotFound,
-                         HttpResponseRedirect)
+                         HttpResponseRedirect, JsonResponse)
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 
 from forums.forms import CreatePostForm
 from forums.models import Post
+from .models import Post
 
 
 
@@ -80,6 +82,47 @@ def add_request_ajax(request):
 
         return HttpResponse(b"CREATED", status=201)
     return HttpResponseNotFound
+
+@csrf_exempt
+def create_product_flutter(request):
+    if request.method == 'POST':
+        
+        data = json.loads(request.body)
+
+        new_post = Post.objects.create(
+            title=data["title"],
+            content=data["content"],
+            book_name=data["book_name"],
+            rating=data["rating"],
+            author=data["author"],
+        )
+
+        new_post.save()
+
+        return JsonResponse({"status": "success"}, status=201)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
+
+@csrf_exempt
+def create_post_json(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            post = Post(
+                title=data["title"],
+                content=data["content"],
+                book_name=data["book_name"],
+                rating=data["rating"],
+                author=data["author"],
+            )
+            post.save()
+            return JsonResponse({"message": "Post created successfully"}, status=201)
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON"}, status=400)
+        except KeyError as e:
+            return JsonResponse({"error": f"Missing field: {e}"}, status=400)
+    else:
+        return JsonResponse({"error": "Only POST requests are allowed"}, status=405)
 
 
 @login_required    
