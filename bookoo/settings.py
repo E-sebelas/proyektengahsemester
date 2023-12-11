@@ -29,8 +29,6 @@ SECRET_KEY = 'django-insecure-r_@m%lk-^z=3_xw_9w*g237b8&qgrvx2ijxmi-n()q4_5dl-$e
 
 PRODUCTION = env.bool('PRODUCTION', False)
 
-
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -159,3 +157,5 @@ CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SAMESITE = 'None'
 SESSION_COOKIE_SAMESITE = 'None'
+
+CSRF_TRUSTED_ORIGINS = ["https://bookoo-e11-tk.pbp.cs.ui.ac.id"]
