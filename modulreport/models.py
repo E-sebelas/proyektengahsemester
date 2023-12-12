@@ -14,22 +14,9 @@ class Report(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.CharField(max_length=200, default='Under Review')
     date_added = models.DateField(auto_now_add=True)
+    username = models.CharField(max_length=200)
 
-    def to_dict(self):
-        report_dict = {
-            'model': 'Report',
-            'id': self.user.pk,
-            'fields': {
-                'book_title': self.book_title,
-                'issue_type': self.issue_type,
-                'other_issue': self.other_issue,
-                'description': self.description,
-                'user': self.user.pk if self.user else 0,
-                'status': self.status,
-                'date_added': self.date_added.strftime("%Y-%m-%d")  # Adjust the date format if needed
-            }
-        }
-        return report_dict
+    
 
 
 

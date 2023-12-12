@@ -21,8 +21,11 @@ def report_book(request):
     laporan_list = Report.objects.filter(user=request.user)
     return render(request, 'mainreport.html', {'laporan_list': laporan_list})
 
+from django.contrib.auth.models import User
+from django.http import JsonResponse
+
 @csrf_exempt
-@login_required(login_url='/login/')  # Requires authentication with '/login/'
+@login_required(login_url='/login/')
 def simpan_laporan(request):
     if request.method == 'POST':
         # Mendapatkan data dari permintaan POST
@@ -31,29 +34,32 @@ def simpan_laporan(request):
         other_issue = request.POST.get('other_issue', '')
         description = request.POST.get('description')
 
-
-        # Lakukan validasi data di sini jika diperlukan
-
         # Buat objek Report dan simpan ke database
         report = Report(
             book_title=book_title,
             issue_type=issue_type,
             other_issue=other_issue,
             description=description,
-            user=request.user,  # Menghubungkan laporan dengan pengguna yang masuk
+            user=request.user,
+            username = request.user.username
         )
 
         report.save()
         formatted_date = date(report.date_added, "M. d, Y")
 
+        # Retrieve the username of the logged-in user
+        # username = request.session.get('username', "None")
+
+
         return JsonResponse({'success': True, 'report': {
-            'id': report.id,  # Tambahkan ID laporan baru
+            'id': report.id,
             'status': report.status,
             'book_title': report.book_title,
             'issue_type': report.issue_type,
-            'other_issue': report.other_issue,  # tambahkan other_issue jika ada
+            'other_issue': report.other_issue,
             'description': report.description,
-            'date_added': formatted_date,  # tambahkan date_added
+            'date_added': formatted_date,
+            'username': report.username,
         }})
 
     return JsonResponse({'success': False})
@@ -122,25 +128,6 @@ def response_view(request, report_id):
 
     except Exception as e:
         return JsonResponse({'success': False, 'message': str(e)})
-
-@csrf_exempt
-def show_json_flutter(request):
-    print(request.body)
-
-    data = json.loads(request.body)
-    print(data)
-    user_id = data['user_id']
-    # flutter = {
-    #  'user_id' : input user id    # }
-    user = User.objects.get(pk=user_id)
-    products = Report.objects.filter(user=user)
-    print(user)
-    print(products)
-    product_list = []
-    for product in products:
-        product_list.append(product.to_dict())
-    print(product_list)
-    return JsonResponse({'products':product_list})
 
 def show_json_by_user(request, user_id):
     data = Report.objects.filter(user__id=user_id)  # Filter by user_id

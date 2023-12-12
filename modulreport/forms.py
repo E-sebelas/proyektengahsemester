@@ -6,7 +6,7 @@ from .models import Response
 class ReportForm(forms.ModelForm):
     class Meta:
         model = Report
-        fields = ['book_title', 'issue_type', 'other_issue', 'description']
+        fields = ['book_title', 'issue_type', 'other_issue', 'description', 'username']
 
 class ResponseForm(forms.ModelForm):
     class Meta:
