@@ -13,6 +13,7 @@ from django.shortcuts import redirect
 from django.views.decorators.http import require_POST
 import json
 from .models import Response  # Import the Response model from your app's models
+from django.contrib.auth.models import User
 
 @login_required
 def report_book(request):
@@ -23,7 +24,7 @@ def report_book(request):
 
 
 @csrf_exempt
-@login_required  # Menambahkan dekorator untuk memastikan pengguna masuk sebelum mengakses view
+@login_required(login_url='/login/')  # Requires authentication with '/login/'
 def simpan_laporan(request):
     if request.method == 'POST':
         # Mendapatkan data dari permintaan POST
@@ -124,4 +125,52 @@ def response_view(request, report_id):
     except Exception as e:
         return JsonResponse({'success': False, 'message': str(e)})
 
+@csrf_exempt
+def show_json_flutter(request):
+    print(request.body)
 
+    data = json.loads(request.body)
+    print(data)
+    user_id = data['user_id']
+    # flutter = {
+    #  'user_id' : input user id    # }
+    user = User.objects.get(pk=user_id)
+    products = Report.objects.filter(user=user)
+    print(user)
+    print(products)
+    product_list = []
+    for product in products:
+        product_list.append(product.to_dict())
+    print(product_list)
+    return JsonResponse({'products':product_list})
+
+def show_json_by_user(request, user_id):
+    data = Report.objects.filter(user__id=user_id)  # Filter by user_id
+
+    serialized_data = serializers.serialize("json", data)
+    return HttpResponse(serialized_data, content_type="application/json")
+
+
+@csrf_exempt
+def simpan_laporan_flutter(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+
+        # Extracting data from the request
+        book_title = data.get('book_title')
+        issue_type = data.get('issue_type')
+        other_issue = data.get('other_issue')
+        description = data.get('description')
+
+        # Creating a new Product object using the extracted data
+        new_product = Report.objects.create(
+            book_title=book_title,
+            issue_type=issue_type,
+            other_issue=other_issue,
+            description=description,
+            user=request.user  # Make sure to handle user authentication properly
+        )
+
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)

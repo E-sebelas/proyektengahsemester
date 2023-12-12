@@ -25,12 +25,13 @@ def login(request):
             # Prepare the response data
             response_data = {
                 "username": user.username,
+                "user_id": user.pk,
                 "status": True,
                 "message": "Login successful!",
                 "is_admin": is_admin  # Include the admin status in the response
                 # Add more data as needed
             }
-
+            
             return JsonResponse(response_data, status=200)
         else:
             return JsonResponse({
