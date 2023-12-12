@@ -12,6 +12,9 @@ urlpatterns = [
     path('hapuslaporan/<int:id>/', views.hapus_laporan, name='hapus_laporan'),
     path('adminreport/', views.admin_report, name='admin_report'),
     path('reportresponse/<int:report_id>/', views.response_view, name='reportresponse'),
+    path('json/<int:user_id>/', views.show_json_by_user, name='show_json_by_user'),
+    path('simpanlaporanflutter/', views.simpan_laporan_flutter, name='simpan_laporan'),
+
 
 ]
 

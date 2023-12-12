@@ -237,7 +237,7 @@
             $(document).on("click", ".delete-button", function() {
                 var row = $(this).closest("tr"); // Baris yang akan dihapus
                 var id = $(this).data("id"); // ID laporan yang akan dihapus
-
+                console.log(id);
                 // Konfirmasi penghapusan
                 if (confirm("Apakah Anda yakin ingin menghapus laporan ini?")) {
                     // Mengirim permintaan AJAX ke backend untuk menghapus laporan
