@@ -21,8 +21,6 @@ def report_book(request):
     laporan_list = Report.objects.filter(user=request.user)
     return render(request, 'mainreport.html', {'laporan_list': laporan_list})
 
-
-
 @csrf_exempt
 @login_required(login_url='/login/')  # Requires authentication with '/login/'
 def simpan_laporan(request):
