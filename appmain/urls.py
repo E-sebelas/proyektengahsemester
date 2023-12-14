@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 from django.contrib.auth.views import LoginView
-from appmain.views import get_books, get_books_json, favorite, get_favorites, show_favorite, favorite_flutter
+from appmain.views import get_books, get_books_json, favorite, get_favorites, show_favorite, favorite_flutter, all_favorites
 
 app_name='appmain'
 
@@ -19,5 +19,6 @@ urlpatterns = [
     path('get_favorites/', get_favorites, name='get_favorites'),
     path('show_favorite/', show_favorite, name='show_favorite'),
     path('favorite_flutter/', favorite_flutter, name='favorite_flutter'),
+    path('all_favorites/', all_favorites, name='all_favorites'),
     # Tambahkan URL lainnya sesuai kebutuhan
 ]

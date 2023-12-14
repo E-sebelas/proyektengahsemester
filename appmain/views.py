@@ -112,6 +112,10 @@ def get_favorites(request):
     favorites = Favorite.objects.filter(user=request.user)
     return HttpResponse(serializers.serialize('json', favorites))
 
+def all_favorites(request):
+    favorites = Favorite.objects.all()
+    return HttpResponse(serializers.serialize('json', favorites))
+
 @csrf_exempt
 def favorite_flutter(request):
     if request.method == 'POST':
