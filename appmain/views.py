@@ -15,7 +15,7 @@ from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
-
+import json
 
 
 def show_main(request):
@@ -111,5 +111,22 @@ def favorite(request):
 def get_favorites(request):
     favorites = Favorite.objects.filter(user=request.user)
     return HttpResponse(serializers.serialize('json', favorites))
+
+@csrf_exempt
+def favorite_flutter(request):
+    if request.method == 'POST':
+        
+        data = json.loads(request.body)
+
+        new_favorite = Favorite.objects.create(
+            user = request.user,
+            title = data["title"],
+        )
+
+        new_favorite.save()
+
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
 
 # Create your views here.
