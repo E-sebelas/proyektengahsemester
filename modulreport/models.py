@@ -15,11 +15,10 @@ class Report(models.Model):
     status = models.CharField(max_length=200, default='Under Review')
     date_added = models.DateField(auto_now_add=True)
     username = models.CharField(max_length=200)
+    admin_response = models.TextField(default='', null=True)
+
 
     
-
-
-
 class Response(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     report = models.ForeignKey(Report, on_delete=models.CASCADE)
