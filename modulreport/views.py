@@ -96,13 +96,12 @@ def response_view(request, report_id):
         data = json.loads(request.body)
         response_text = data.get('responseText')
         status = data.get('status')
-
+    
         report = Report.objects.get(pk=report_id)
-        response = Response(response_text=response_text, user=request.user, report=report)
-        response.save()
 
         report.status = status
-        report.description = response_text
+        # report.description = response_text
+        report.admin_response = response_text
         report.save()
         formatted_date = date(report.date_added, "M. d, Y")
 
@@ -123,7 +122,8 @@ def response_view(request, report_id):
             'other_issue': report.other_issue,
             'description': response_text,
             'date_added': formatted_date,
-            'user': user_info  # Include user information
+            'user': user_info,  # Include user information
+            'admin_response': response_text,
         }})
 
     except Exception as e:
@@ -137,6 +137,28 @@ def show_json_by_user(request, user_id):
 
 
 @csrf_exempt
+def response_laporan_flutter(request, report_id):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        print(data)
+        # Extracting data from the request
+        response_text = data.get('adminResponse')
+        print(response_text)
+        status = data.get('status')
+
+        report = Report.objects.get(pk=report_id)
+
+        report.status = status
+        # report.description = response_text
+        report.admin_response = response_text
+        report.save()
+
+
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
+
+@csrf_exempt
 def simpan_laporan_flutter(request):
     if request.method == 'POST':
         data = json.loads(request.body)
@@ -146,6 +168,8 @@ def simpan_laporan_flutter(request):
         issue_type = data.get('issue_type')
         other_issue = data.get('other_issue')
         description = data.get('description')
+        username = data.get('username')
+
 
         # Creating a new Product object using the extracted data
         new_product = Report.objects.create(
@@ -153,7 +177,9 @@ def simpan_laporan_flutter(request):
             issue_type=issue_type,
             other_issue=other_issue,
             description=description,
-            user=request.user  # Make sure to handle user authentication properly
+            user=request.user,  # Make sure to handle user authentication properly
+            username = username,
+            admin_response = '',
         )
 
         return JsonResponse({"status": "success"}, status=200)
