@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Entry</title>
+</head>
+<body>
+    <h1>Add a New Diary Entry</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add Entry</button>
+    </form>
+    <a href="{% url 'view_entries' %}">View All Entries</a>
+</body>
+</html>
