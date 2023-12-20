@@ -124,7 +124,7 @@ def favorite_flutter(request):
 
         new_favorite = Favorite.objects.create(
             user = request.user,
-            title = data["title"],
+            Title = data["title"],
         )
 
         new_favorite.save()
