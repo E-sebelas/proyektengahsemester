@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.core import serializers
 from django.http import (HttpResponse, HttpResponseNotFound,
-                         HttpResponseRedirect)
+                         HttpResponseRedirect, JsonResponse)
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
@@ -85,3 +85,21 @@ def show_bookrequest(request):
     # Fungsi ini akan merender halaman main.html dan mengembalikannya sebagai respons.
     return render(request, 'bookreq-main.html')
 
+@csrf_exempt
+def create_request_flutter(request):
+    if request.method == 'POST':
+        
+        data = get_reqs_json.loads(request.body)
+
+        new_product = Reqbook.objects.create(
+            user = request.user,
+            title = data["title"],
+            author = data["author"],
+            published = data["published"],
+        )
+
+        new_product.save()
+
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
